@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane fx:id="createScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="skwira.marcin.fatlosscalculator.CreateSceneController">
+    <VBox>
+        <fx:include fx:id="menu" source="menu.fxml"/>
+        <fx:include fx:id="createForm" source="createForm.fxml"/>
+    </VBox>
+</Pane>

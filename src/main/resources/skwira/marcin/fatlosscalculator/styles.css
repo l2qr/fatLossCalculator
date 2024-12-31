@@ -1,0 +1,165 @@
+* {
+    -fx-primary-color: #212121;
+    -fx-secondary-color:  derive(-fx-primary-color,10%);
+    -fx-text-color: #D2D2D2;
+    -fx-highlight-color: #2196f3;
+}
+
+.createListItem {
+    -fx-pref-width: 580;
+}
+.createListItemControl {
+    -fx-pref-width: 480;
+    -fx-max-width: 480;
+
+}
+
+#buttonVBox {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background: transparent;
+}
+
+.button {
+    -fx-background-color: transparent;
+}
+
+.label,
+.radio-button,
+.text-field {
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background: transparent;
+}
+
+.hboxlistitem:selected {
+    -fx-background-color: #434647;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.increment-arrow, .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #434647;
+    -fx-background-radius: 5em;
+}
+
+
+
+
+.date-picker .arrow-button {
+	-fx-background-color: -fx-primary-color;
+	-fx-background-radius: 0;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color: -fx-secondary-color;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color: white;
+}
+.date-picker .cell {
+	-fx-text-fill: white;
+	-fx-background-color: -fx-primary-color;
+}
+.date-picker .cell:hover {
+	-fx-background-color: -fx-secondary-color;
+}
+.date-picker .cell:focused {
+	-fx-background-color: black;
+}
+.date-picker .selected,
+.date-picker .selected:focused {
+	-fx-background-color: -fx-highlight-color;
+	-fx-text-fill: white;
+}
+.date-picker-popup  {
+	-fx-border-color: transparent;
+}
+.date-picker-popup .month-year-pane {
+	-fx-background-color: -fx-primary-color;
+}
+.date-picker-popup .month-year-pane .label {
+	-fx-text-fill: white;
+}
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: -fx-secondary-color;
+}
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
+}
+
+.radio-button .radio {
+    -fx-background-insets: 0;
+    -fx-background-color: derive(-fx-secondary-color, 20%);
+}
+.radio-button:hover .radio {
+    -fx-background-color: derive(-fx-secondary-color, 40%);
+}
+.radio-button:selected .radio .dot {
+    -fx-background-color: -fx-highlight-color;
+    -fx-background-insets: 0;
+}
+
+.choice-box .arrow {
+    -fx-background-color: white;
+    -fx-size: 12;
+}
+.choice-box .context-menu {
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: white;
+}
+.choice-box .menu-item:focused {
+    -fx-background-color: derive(-fx-highlight-color, -10%)
+}
+
+.slider .track {
+    -fx-background-color: derive(-fx-secondary-color, 20%);
+    /*-fx-background-insets: 0 0 -1 0, 0, 1;
+    -fx-background-radius: 0.25em, 0.25em, 0.166667em; *//* 3 3 2 *//*
+    -fx-padding: 0.25em;  3 */
+}
+.slider .thumb {
+    -fx-background-color: -fx-highlight-color;
+    -fx-border-width: 1;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+}
+.slider:focused .thumb {
+    -fx-background-color: -fx-highlight-color;
+    -fx-border-color: white;
+}
+
+
+.darker-bg {
+    -fx-background-color: -fx-primary-color;
+}
+
+.dark-bg {
+    -fx-background-color: -fx-secondary-color;
+}
+
