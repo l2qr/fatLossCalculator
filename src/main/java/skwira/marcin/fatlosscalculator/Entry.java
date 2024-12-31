@@ -1,21 +1,24 @@
 package skwira.marcin.fatlosscalculator;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Entry {
 
-    private double bodyMass;
-    private int carbFat;
-    private Lookups.Condition condition;
+    private String name;
+    private LocalDate createdDate;
+    private LocalDate lastUpdateDate;
+    private Lookups.Sex sex;
     private LocalDate dateOfBirth;
+    private double bodyMass;
     private double fatPercentage;
     private Lookups.Lifestyle lifestyle;
-    private String name;
-    private Lookups.Sex sex;
+    private Lookups.Condition condition;
     private double targetFatPercentage;
     private double weeklyBMLossPercentage;
+    private int carbFat;
 
-    private int age;
+    private long age;
     private Lookups.BMI bmi;
     private double fatMass;
     private double leanMass;
@@ -53,7 +56,32 @@ public class Entry {
 
     public Entry() {}
 
-    public Entry(double bodyMass, int carbFat, Lookups.Condition condition, LocalDate dateOfBirth, double fatPercentage, Lookups.Lifestyle lifestyle, String name, Lookups.Sex sex, double targetFatPercentage, double weeklyBMLossPercentage) {
+    public Entry(
+            double bodyMass, int carbFat, String createdDate, String condition,
+            String dateOfBirth, double fatPercentage, String lastUpdateDate, String lifestyle,
+            String name, String sex, double targetFatPercentage, double weeklyBMLossPercentage
+    ) {
+        this(
+                bodyMass,
+                carbFat,
+                LocalDate.parse(createdDate),
+                Lookups.Condition.valueOfLabel(condition),
+                LocalDate.parse(dateOfBirth),
+                fatPercentage,
+                LocalDate.parse(lastUpdateDate),
+                Lookups.Lifestyle.valueOfLabel(lifestyle),
+                name,
+                Lookups.Sex.valueOfLabel(sex),
+                targetFatPercentage,
+                weeklyBMLossPercentage
+        );
+    }
+
+    public Entry(
+            double bodyMass, int carbFat, LocalDate createdDate, Lookups.Condition condition,
+            LocalDate dateOfBirth, double fatPercentage, LocalDate lastUpdateDate, Lookups.Lifestyle lifestyle,
+            String name, Lookups.Sex sex, double targetFatPercentage, double weeklyBMLossPercentage
+    ) {
         this.bodyMass = bodyMass;
         this.carbFat = carbFat;
         this.condition = condition;
@@ -68,7 +96,7 @@ public class Entry {
     }
 
     private void calculateValues() {
-        this.age = LocalDate.now().getYear() - dateOfBirth.getYear();
+        this.age = ChronoUnit.YEARS.between(dateOfBirth, LocalDate.now());
         if(sex == Lookups.Sex.MALE) {
             if (fatPercentage >= 0.27)
                 this.bmi = Lookups.BMI.OBESE;
@@ -101,7 +129,20 @@ public class Entry {
         this.totalBMLossCalorieCost = fmLossCalorieCost + lbmLossCalorieCost;
         this.requiredDailyCalorieDeficit = totalBMLossCalorieCost / (timeToTarget * 7);
         this.dailyCalorieIntake = bmr * Lookups.activityFactorMap.get(lifestyle);
-// TODO finish the calculations for protein, carbs, fat, fiber
+        if(age > 60) {
+            this.proteinGrams = leanMass * Lookups.proteinIntakeFactor.get(60);
+        } else if (age > 50) {
+            this.proteinGrams = leanMass * Lookups.proteinIntakeFactor.get(50);
+        } else if (age > 40) {
+            this.proteinGrams = leanMass * Lookups.proteinIntakeFactor.get(40);
+        } else if (age > 30) {
+            this.proteinGrams = leanMass * Lookups.proteinIntakeFactor.get(30);
+        } else {
+            this.proteinGrams = leanMass * Lookups.proteinIntakeFactor.get(0);
+        }
+        this.carbsGrams = (dailyCalorieIntake - proteinGrams * 4) * carbFat / 4;
+        this.fatGrams = (dailyCalorieIntake - proteinGrams * 4) * (1 - carbFat) / 9;
+        this.fiberGrams = dailyCalorieIntake/1000*12.5;
     }
 
     public double getBodyMass() {
@@ -118,6 +159,14 @@ public class Entry {
 
     public void setCarbFat(int carbFat) {
         this.carbFat = carbFat;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Lookups.Condition getCondition() {
@@ -152,6 +201,14 @@ public class Entry {
         this.lifestyle = lifestyle;
     }
 
+    public LocalDate getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(LocalDate lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -182,5 +239,77 @@ public class Entry {
 
     public void setWeeklyBMLossPercentage(double weeklyBMLossPercentage) {
         this.weeklyBMLossPercentage = weeklyBMLossPercentage;
+    }
+
+    public long getAge() {
+        return age;
+    }
+
+    public Lookups.BMI getBmi() {
+        return bmi;
+    }
+
+    public double getFatMass() {
+        return fatMass;
+    }
+
+    public double getLeanMass() {
+        return leanMass;
+    }
+
+    public double getBmr() {
+        return bmr;
+    }
+
+    public double getFmLossRequired() {
+        return fmLossRequired;
+    }
+
+    public double getBmLossRequired() {
+        return bmLossRequired;
+    }
+
+    public double getWeeklyBMLossKG() {
+        return weeklyBMLossKG;
+    }
+
+    public double getTimeToTarget() {
+        return timeToTarget;
+    }
+
+    public double getFmLossCalorieCost() {
+        return fmLossCalorieCost;
+    }
+
+    public double getLbmLossCalorieCost() {
+        return lbmLossCalorieCost;
+    }
+
+    public double getTotalBMLossCalorieCost() {
+        return totalBMLossCalorieCost;
+    }
+
+    public double getRequiredDailyCalorieDeficit() {
+        return requiredDailyCalorieDeficit;
+    }
+
+    public double getDailyCalorieIntake() {
+        return dailyCalorieIntake;
+    }
+
+    public double getProteinGrams() {
+        return proteinGrams;
+    }
+
+    public double getCarbsGrams() {
+        return carbsGrams;
+    }
+
+    public double getFatGrams() {
+        return fatGrams;
+    }
+
+    public double getFiberGrams() {
+        return fiberGrams;
     }
 }

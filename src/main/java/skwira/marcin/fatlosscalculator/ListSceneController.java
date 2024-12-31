@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +29,7 @@ public class ListSceneController {
 
     @FXML
     AnchorPane entriesList;
+
     @FXML
     Button removeButton;
 
@@ -66,39 +69,62 @@ public class ListSceneController {
         ResultSet entries = null;
         try {
             entries = HelloApplication.dbController.selectEntries();
+            while (entries.next()) {
+                Entry e = new Entry(
+                        entries.getDouble("body_mass"),
+                        entries.getInt("carb_fat_distribution"),
+                        entries.getString("created"),
+                        entries.getString("condition"),
+                        entries.getString("dob"),
+                        entries.getDouble("fat_perc"),
+                        entries.getString("last_updated"),
+                        entries.getString("lifestyle"),
+                        entries.getString("record_name"),
+                        entries.getString("sex"),
+                        entries.getDouble("target_fat_perc"),
+                        entries.getDouble("weekly_loss")
+                        );
+                HBoxListItem item = getListItem(e);
+                entriesList.getChildren().add(item);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        while (entries.next()) {
-            String nameLabel = entries.getString("record_name");
-            String sex = entries.getString("");
-            String age = entries.getString("");
-            String bodymass = entries.getDouble("body_mass");
-            String target = entries.getString("");
         }
     }
 
     private Label createLabel(String text) {
         Label label = new Label();
-        label.setPrefHeight(50);
-        label.setPrefWidth(500);
-        label.setPadding(new Insets(5,5,5,5));
+        label.setMaxHeight(50);
         label.setText(text);
+        label.setAlignment(Pos.BASELINE_LEFT);
+        label.setPadding(new Insets(0,0,0,7));
         return label;
     }
 
-    private HBox getListItem(ResultSet res) {
+    private HBoxListItem getListItem(Entry e) {
+        return getListItem(e.getName(), e.getSex().toString(), e.getAge(), e.getBodyMass(), e.getTargetFatPercentage());
+    }
 
-        HBoxListItem listItem = new HBoxListItem();
-        listItem.setPrefHeight(50);
-        listItem.setPrefWidth(600);
-        listItem.setPadding(new Insets(5,5,5,5));
+    private HBoxListItem getListItem(String name, String sex, long age, double bodymass, double targetFatPerc ) {
+        Label nameLabel = createLabel(name);
+        nameLabel.setMaxWidth(330);
+        nameLabel.setMinWidth(330);
 
-        Label nameLabel = createLabel("");
-        Label sexLabel = createLabel("");
-        Label ageLabel = createLabel("");
-        Label bodymassLabel = createLabel("");
-        Label targetLabel = createLabel("");
+        Label sexLabel = createLabel(sex);
+        sexLabel.setMinWidth(70);
+        sexLabel.setMaxWidth(70);
+
+        Label ageLabel = createLabel(Long.toString(age));
+        ageLabel.setMinWidth(40);
+        ageLabel.setMaxWidth(40);
+
+        Label bodymassLabel = createLabel(Double.toString(bodymass) + "kg");
+        bodymassLabel.setMinWidth(75);
+        bodymassLabel.setMaxWidth(75);
+
+        Label targetLabel = createLabel(Double.toString(targetFatPerc) + "%");
+        targetLabel.setMinWidth(50);
+        targetLabel.setMaxWidth(50);
 
         ImageView imageView = new ImageView();
         imageView.setFitHeight(30);
@@ -106,24 +132,30 @@ public class ListSceneController {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         try {
-            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("./next.png"))));
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/skwira/marcin/fatlosscalculator/next.png"))));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         Button openBtn = new Button();
-        openBtn.setPrefHeight(30);
-        openBtn.setPrefWidth(30);
+        openBtn.setMaxHeight(30);
+        openBtn.setMaxWidth(30);
+        openBtn.setMinWidth(30);
         openBtn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         openBtn.setGraphicTextGap(0);
-        openBtn.getChildrenUnmodifiable().add(imageView);
+        openBtn.setGraphic(imageView);
 
+        HBoxListItem listItem = new HBoxListItem();
+        listItem.setPrefHeight(50);
+        listItem.setPrefWidth(600);
+        listItem.setPadding(new Insets(0,3,0,0));
         listItem.getChildren().add(nameLabel);
         listItem.getChildren().add(sexLabel);
         listItem.getChildren().add(ageLabel);
         listItem.getChildren().add(bodymassLabel);
         listItem.getChildren().add(targetLabel);
-        listItem.getChildren().add(targetLabel);
         listItem.getChildren().add(openBtn);
+        listItem.setAlignment(Pos.CENTER);
         listItem.addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
         return listItem;
     }

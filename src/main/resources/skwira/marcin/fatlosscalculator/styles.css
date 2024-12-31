@@ -36,6 +36,9 @@
     -fx-border-color: transparent;
     -fx-background: transparent;
 }
+.hboxlistitem .label {
+    -fx-font-size: 12px;
+}
 
 .hboxlistitem:selected {
     -fx-background-color: #434647;

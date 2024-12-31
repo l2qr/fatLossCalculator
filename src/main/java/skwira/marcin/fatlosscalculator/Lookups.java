@@ -5,10 +5,18 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class Lookups {
+    public static Map<Integer, Double> proteinIntakeFactor;
     public static Map<BMI, Map<Condition, Double>> fmVsLbmLossMap = new HashMap<>();
 //    public static final double[] activityFactor = {1.2, 1.375, 1.55, 1.725, 1.9};
     public static Map<Lifestyle, Double> activityFactorMap;
     static {
+        proteinIntakeFactor = Map.of(
+                60, 3.8,
+                50, 3.5,
+                40, 3.1,
+                30, 2.8,
+                0, 2.4
+        );
         activityFactorMap = Map.of(
           Lifestyle.SEDENTARY, 1.2,
           Lifestyle.LIGHT_ACTIVITY, 1.375,
