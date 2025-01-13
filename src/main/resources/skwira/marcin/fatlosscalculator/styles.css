@@ -161,6 +161,10 @@
     -fx-padding: 0 0 0 5;
 }
 
+.invalid {
+    -fx-border-width: 2;
+    -fx-border-color: #f55142;
+}
 .darker-bg {
     -fx-background-color: -fx-primary-color;
 }

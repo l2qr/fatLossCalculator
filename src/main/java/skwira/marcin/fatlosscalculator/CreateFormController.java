@@ -1,6 +1,11 @@
 package skwira.marcin.fatlosscalculator;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -10,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+
+import java.time.LocalDate;
 
 public class CreateFormController {
 
@@ -43,6 +50,8 @@ public class CreateFormController {
     @FXML
     private Slider weeklyBMLossSlider;
 
+    /* TODO Help button click listener and help dialog with choice explanations */
+
     @FXML
     public void initialize() {
         lifestyleChoice.getItems().addAll(Lookups.Lifestyle.getStrings());
@@ -56,6 +65,14 @@ public class CreateFormController {
             @Override
             public Double fromString(String s) {
                 return Double.parseDouble(s.substring(0, s.indexOf('/')));
+            }
+        });
+        bodyMassTextfield.focusedProperty().addListener(this::textfieldDoubleValidateListener);
+        fatTextfield.focusedProperty().addListener(this::textfieldDoubleValidateListener);
+        targetFatTextfield.focusedProperty().addListener(this::textfieldDoubleValidateListener);
+        datepicker.focusedProperty().addListener((arg0, oldVal, newVal) -> {
+            if(!newVal) {
+//                datepicker.;
             }
         });
     }
@@ -102,5 +119,36 @@ public class CreateFormController {
         weeklyBMLossSlider.setValue(entry.getWeeklyBMLossPercentage() * 100);
         carbFatSlider.setValue(entry.getCarbFat() * 100);
     }
+
+    private void textfieldDoubleValidateListener(ObservableValue arg0, Boolean oldVal, Boolean newVal) {
+        TextField tf = (TextField) ((ReadOnlyBooleanProperty) arg0).getBean();
+        if (!newVal) { // when focus lost
+            if(!validateDouble(tf.getText())) {
+                tf.getStyleClass().add("invalid");
+            }else{
+                if(tf.getStyleClass().contains("invalid"))
+                    tf.getStyleClass().remove("invalid");
+            }
+        }
+    }
+
+    private boolean validateDouble(String s) {
+        try {
+            Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDate(String s) {
+        try {
+            LocalDate.parse(s);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 
 }
