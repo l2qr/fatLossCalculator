@@ -1,10 +1,6 @@
 package skwira.marcin.fatlosscalculator;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class CreateSceneController {
 
@@ -16,8 +12,12 @@ public class CreateSceneController {
 
     @FXML
     public void initialize() {
-        menuController.initialize(Lookups.MenuScene.CREATE, createFormController);
+        menuController.initialize(Lookups.SceneType.CREATE);
+        menuController.setCreateFormController(createFormController);
     }
 
+    public CreateFormController getCreateFormController() {
+        return createFormController;
+    }
 
 }

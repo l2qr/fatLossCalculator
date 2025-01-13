@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="listScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.ListSceneController">
+<Pane fx:id="listScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.ListSceneController">
     <children>
         <fx:include fx:id="menu" source="menu.fxml" />
       <HBox layoutY="60.0" prefHeight="30.0" prefWidth="600.0">
          <children>
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="330.0" minWidth="330.0" mnemonicParsing="false" text="Name" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" text="Sex" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" text="Age" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" text="Body mass" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" text="Target" />
+            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="330.0" minWidth="330.0" mnemonicParsing="false" styleClass="heading" text="Name" />
+            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" styleClass="heading" text="Sex" />
+            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" styleClass="heading" text="Age" />
+            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" styleClass="heading" text="Body mass" />
+            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" styleClass="heading" text="Target" />
             <Pane maxHeight="30.0" maxWidth="35.0" minHeight="30.0" minWidth="35.0" />
          </children>
       </HBox>

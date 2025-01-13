@@ -157,6 +157,9 @@
     -fx-border-color: white;
 }
 
+.heading {
+    -fx-padding: 0 0 0 5;
+}
 
 .darker-bg {
     -fx-background-color: -fx-primary-color;

@@ -26,8 +26,11 @@ public class HBoxListItem extends HBox {
 
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
 
-    public HBoxListItem() {
+    private Entry entry;
+
+    public HBoxListItem(Entry e) {
         super();
+        this.entry = e;
         getStyleClass().add("hboxlistitem");
     }
 
@@ -45,5 +48,13 @@ public class HBoxListItem extends HBox {
 
     public BooleanProperty selectedProperty() {
         return selected;
+    }
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
 }
