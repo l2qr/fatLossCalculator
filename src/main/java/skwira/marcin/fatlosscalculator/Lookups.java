@@ -59,7 +59,7 @@ public class Lookups {
 
         private final String name;
 
-        private SceneType(String s) {
+        SceneType(String s) {
             name = s;
         }
 
@@ -96,7 +96,7 @@ public class Lookups {
 
         private final String name;
 
-        private MenuBtnType(String s) {
+        MenuBtnType(String s) {
             name = s;
         }
 
@@ -130,7 +130,7 @@ public class Lookups {
 
         private final String name;
 
-        private Sex(String s) {
+        Sex(String s) {
             name = s;
         }
 
@@ -166,7 +166,7 @@ public class Lookups {
 
         private final String name;
 
-        private Lifestyle(String s) {
+        Lifestyle(String s) {
             name = s;
         }
 
@@ -201,7 +201,7 @@ public class Lookups {
 
         private final String name;
 
-        private Condition(String s) {
+        Condition(String s) {
             name = s;
         }
 
@@ -235,7 +235,7 @@ public class Lookups {
         LEAN("Lean");
         private final String name;
 
-        private BMI(String s) {
+        BMI(String s) {
             name = s;
         }
 

@@ -3,6 +3,7 @@ package skwira.marcin.fatlosscalculator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import lombok.Getter;
 
 public class DetailsSceneController {
     @FXML
@@ -17,25 +18,19 @@ public class DetailsSceneController {
     @FXML
     private TableColumn<Entry.EntryPropertyRow, String> valueColumn;
 
+    @Getter
     private Entry entry;
 
     @FXML
     public void initialize() {
-        menuController.initialize(Lookups.SceneType.DETAILS);
+        menuController.setDetailsSceneController(this);
         propertyColumn.setCellValueFactory(p -> p.getValue().propertyProperty());
         valueColumn.setCellValueFactory(p -> p.getValue().valueProperty());
     }
 
-    public Entry getEntry() {
-        return entry;
-    }
-
-    public void setEntry(Entry entry) {
-        this.entry = entry;
-    }
-
     public void loadDetails(Entry entry) {
-        setEntry(entry);
+        ScenesController.getInstance().setEntry(entry);
+        this.entry = entry;
         detailsTable.getItems().setAll(entry.getPropertiesRows());
     }
 

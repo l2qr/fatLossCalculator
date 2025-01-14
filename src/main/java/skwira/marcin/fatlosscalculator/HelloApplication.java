@@ -3,17 +3,16 @@ package skwira.marcin.fatlosscalculator;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class HelloApplication extends Application {
 
     static DatabaseController dbController;
     ScenesController sc = ScenesController.getInstance();
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         sc.setStage(stage);
-        sc.switchScene(Lookups.SceneType.LIST);
+        sc.switchToListScene();
+        FXWinUtil.setDarkMode(stage, true);
     }
 
     public static void main(String[] args) {

@@ -6,22 +6,27 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class ListSceneController {
 
+    @Getter
     @FXML
     private AnchorPane entriesList;
     @FXML
     private MenuController menuController;
+
+    @Setter
+    @Getter
+    private Entry selectedEntry;
+
     EventHandler<Event> filter = new EventHandler<>() {
         @Override
         public void handle(Event event) {
@@ -30,9 +35,8 @@ public class ListSceneController {
             }
             HBoxListItem listItem = (HBoxListItem) event.getSource();
             ObservableList<Node> children = entriesList.getChildren();
-            boolean itemsSelected = false;
             for (Node child : children) {
-                if (!((HBoxListItem) child).equals(listItem)) {
+                if (!child.equals(listItem)) {
                     ((HBoxListItem) child).setSelected(false);
                 }
             }
@@ -40,24 +44,19 @@ public class ListSceneController {
             if (listItem.isSelected()) {
                 menuController.showButton(Lookups.MenuBtnType.EDIT);
                 menuController.showButton(Lookups.MenuBtnType.REMOVE);
-                ScenesController.getInstance().getStage().setUserData(listItem.getEntry());
+                selectedEntry = listItem.getEntry();
             } else {
                 menuController.hideButton(Lookups.MenuBtnType.EDIT);
                 menuController.hideButton(Lookups.MenuBtnType.REMOVE);
-                ScenesController.getInstance().getStage().setUserData(null);
+                selectedEntry = null;
             }
         }
     };
 
-    public AnchorPane getEntriesList() {
-        return entriesList;
-    }
-
     @FXML
     public void initialize() {
-        menuController.initialize(Lookups.SceneType.LIST);
         menuController.setListSceneController(this);
-        ResultSet entries = null;
+        ResultSet entries;
         try {
             entries = HelloApplication.dbController.selectEntries();
             int i = 0;
@@ -96,4 +95,5 @@ public class ListSceneController {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -1,20 +1,19 @@
 package skwira.marcin.fatlosscalculator;
 
+import lombok.Getter;
+
 import java.sql.*;
 import java.time.LocalDate;
 
+@Getter
 public class DatabaseController {
 
-    private final String dbPath = "./";
     protected Connection conn;
 
     DatabaseController(String dbName) throws Exception {
+        String dbPath = "./";
         conn = DriverManager.getConnection("jdbc:sqlite:"+ dbPath + dbName);
         initTables(conn);
-    }
-
-    public Connection getConn() {
-        return conn;
     }
 
     private void initTables(Connection conn) {

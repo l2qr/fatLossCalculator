@@ -3,50 +3,63 @@ package skwira.marcin.fatlosscalculator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 
+@Getter
 public final class ScenesController {
 
     private final static ScenesController INSTANCE = new ScenesController();
+    @Setter
     private Lookups.SceneType sceneType;
-
-
     private Stage stage;
+    @Setter
+    private Entry entry;
 
     private ScenesController() {}
-    public static ScenesController getInstance() {return INSTANCE;}
 
-    public Object switchScene(Lookups.SceneType sceneType) {
+    public static ScenesController getInstance() {
+        return INSTANCE;
+    }
+
+    private Object switchScene(Lookups.SceneType sceneType) {
+        this.sceneType = sceneType;
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(sceneType.toString()));
-        Scene scene = null;
+        Scene scene;
         try {
             scene = new Scene(fxmlLoader.load(), 600, 450);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        stage.setScene(scene);
-        stage.show();
-        if (sceneType == Lookups.SceneType.EDIT) {
-            ((CreateSceneController)fxmlLoader.getController()).getCreateFormController().setValues((Entry) stage.getUserData());
-        }
+        this.stage.setScene(scene);
+        this.stage.show();
         setSceneType(sceneType);
         return fxmlLoader.getController();
     }
 
-    public Lookups.SceneType getSceneType() {
-        return sceneType;
+    public Object switchToCreateScene() {
+        return switchScene(Lookups.SceneType.CREATE);
     }
 
-    public void setSceneType(Lookups.SceneType sceneType) {
-        this.sceneType = sceneType;
+    public Object switchToListScene() {
+        return switchScene(Lookups.SceneType.LIST);
     }
 
-    public Stage getStage() {
-        return stage;
+    public Object switchToEditScene(Entry e) {
+        CreateSceneController ctrl = (CreateSceneController) switchScene(Lookups.SceneType.EDIT);
+        ctrl.getCreateFormController().setValues(e);
+        return ctrl;
     }
 
-    public void setStage(Stage s){
+    public Object switchToDetailsScene(Entry e) {
+        DetailsSceneController ctrl = (DetailsSceneController) switchScene(Lookups.SceneType.DETAILS);
+        ctrl.loadDetails(e);
+        return ctrl;
+    }
+
+    public void setStage(Stage s) {
         this.stage = s;
         this.stage.setTitle("Fat Loss Calculator");
     }

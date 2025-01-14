@@ -3,6 +3,7 @@
     -fx-secondary-color:  derive(-fx-primary-color,10%);
     -fx-text-color: #D2D2D2;
     -fx-highlight-color: #2196f3;
+    -fx-error-color: #f55142;
 }
 
 .createListItem {
@@ -24,6 +25,9 @@
 .button {
     -fx-background-color: transparent;
 }
+.button:hover {
+    -fx-translate-y: -2px;
+}
 
 .label,
 .radio-button,
@@ -32,7 +36,8 @@
     -fx-font-size: 16px;
     -fx-font-weight: 500;
     -fx-background-color: transparent;
-    -fx-border-width: 0;
+    -fx-border-width: 2;
+    -fx-border-radius: 2;
     -fx-border-color: transparent;
     -fx-background: transparent;
 }
@@ -44,6 +49,7 @@
     -fx-background-color: #434647;
 }
 
+/* Scroll pane scroll bars */
 .scroll-bar:horizontal, .scroll-bar:vertical{
     -fx-background-color:transparent;
 }
@@ -71,9 +77,8 @@
     -fx-background-radius: 5em;
 }
 
-
-
-
+/* FORM CONTROLS */
+/* Datepicker */
 .date-picker .arrow-button {
 	-fx-background-color: -fx-primary-color;
 	-fx-background-radius: 0;
@@ -115,7 +120,7 @@
 .date-picker-popup .spinner .button .right-arrow {
 	-fx-background-color: white;
 }
-
+/* Radio */
 .radio-button .radio {
     -fx-background-insets: 0;
     -fx-background-color: derive(-fx-secondary-color, 20%);
@@ -127,7 +132,7 @@
     -fx-background-color: -fx-highlight-color;
     -fx-background-insets: 0;
 }
-
+/* Choice */
 .choice-box .arrow {
     -fx-background-color: white;
     -fx-size: 12;
@@ -139,7 +144,7 @@
 .choice-box .menu-item:focused {
     -fx-background-color: derive(-fx-highlight-color, -10%)
 }
-
+/* Slider */
 .slider .track {
     -fx-background-color: derive(-fx-secondary-color, 20%);
     /*-fx-background-insets: 0 0 -1 0, 0, 1;
@@ -157,13 +162,48 @@
     -fx-border-color: white;
 }
 
+/* Dialogs */
+.dialog-pane {
+  -fx-background-color: -fx-primary-color;
+}
+.dialog-pane > .button-bar > .container {
+  -fx-background-color: -fx-primary-color;
+}
+.dialog-pane > .content.label {
+   -fx-padding: 1em;
+   -fx-background-color: -fx-primary-color;
+   -fx-text-fill:-fx-text-color;
+   -fx-font-size:13.0px;
+}
+.dialog-pane:header .header-panel {
+  -fx-background-color: -fx-primary-color;
+}
+.dialog-pane:header .header-panel .label{
+  -fx-background-color: -fx-primary-color;
+  -fx-text-fill: -fx-text-color;
+  -fx-font-size: 16.0px;
+  -fx-font-weight: 700;
+}
+.dialog-pane .button{
+   -fx-background-color: -fx-secondary-color;
+   -fx-text-fill: -fx-text-color;
+   -fx-wrap-text: true;
+ }
+
+ /* TODO style the table in details view */
+
 .heading {
     -fx-padding: 0 0 0 5;
 }
 
 .invalid {
-    -fx-border-width: 2;
-    -fx-border-color: #f55142;
+    -fx-border-color: -fx-error-color;
+}
+
+.error-label {
+    -fx-text-fill: -fx-error-color;
+    -fx-font-size: 12px;
+    -fx-font-weight: 300;
 }
 .darker-bg {
     -fx-background-color: -fx-primary-color;
@@ -172,4 +212,3 @@
 .dark-bg {
     -fx-background-color: -fx-secondary-color;
 }
-
