@@ -176,21 +176,50 @@
    -fx-font-size:13.0px;
 }
 .dialog-pane:header .header-panel {
-  -fx-background-color: -fx-primary-color;
+    -fx-background-color: -fx-primary-color;
 }
 .dialog-pane:header .header-panel .label{
-  -fx-background-color: -fx-primary-color;
-  -fx-text-fill: -fx-text-color;
-  -fx-font-size: 16.0px;
-  -fx-font-weight: 700;
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 16.0px;
+    -fx-font-weight: 700;
 }
 .dialog-pane .button{
-   -fx-background-color: -fx-secondary-color;
-   -fx-text-fill: -fx-text-color;
-   -fx-wrap-text: true;
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: -fx-text-color;
+    -fx-wrap-text: true;
  }
 
- /* TODO style the table in details view */
+ /* TableView */
+.table-view {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: -fx-text-color;
+}
+.table-view .column-header-background{
+    -fx-background-color: -fx-primary-color;
+}
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .table-cell{
+    -fx-text-fill: -fx-text-color;
+}
+.table-row-cell{
+    -fx-background-color: -fx-secondary-color;
+}
+.table-row-cell:odd{
+    -fx-background-color: derive(-fx-secondary-color, 10%);
+}
+.table-row-cell:selected {
+    -fx-background-color: derive(-fx-highlight-color, -10%);
+}
+.table-view .filler {
+    -fx-background-color: -fx-primary-color;
+}
 
 .heading {
     -fx-padding: 0 0 0 5;
