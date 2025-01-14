@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="detailsScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.DetailsSceneController">
+<Pane fx:id="detailsScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.DetailsSceneController">
     <children>
         <fx:include fx:id="menu" source="menu.fxml" />
       <TableView fx:id="detailsTable" layoutY="61.0" prefHeight="390.0" prefWidth="600.0">
         <columns>
-          <TableColumn fx:id="propertyColumn" editable="false" maxWidth="400.0" minWidth="100.0" prefWidth="400.0" text="Property" />
-          <TableColumn fx:id="valueColumn" editable="false" minWidth="200.0" prefWidth="200.0" text="Value" />
+          <TableColumn fx:id="propertyColumn" editable="false" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" resizable="false" text="Property" />
+          <TableColumn fx:id="valueColumn" editable="false" maxWidth="282.0" minWidth="282.0" prefWidth="282.0" resizable="false" text="Value" />
         </columns>
       </TableView>
-      <ScrollPane hbarPolicy="NEVER" layoutY="60.0" prefHeight="390.0" prefWidth="600.0" visible="false">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="600.0" />
-        </content>
-      </ScrollPane>
     </children>
 
 </Pane>
