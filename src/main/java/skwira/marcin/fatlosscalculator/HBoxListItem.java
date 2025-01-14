@@ -4,6 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.css.PseudoClass;
 import javafx.scene.layout.HBox;
+import lombok.Getter;
+import lombok.Setter;
 
 public class HBoxListItem extends HBox {
 
@@ -26,6 +28,8 @@ public class HBoxListItem extends HBox {
 
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
 
+    @Getter
+    @Setter
     private Entry entry;
 
     public HBoxListItem(Entry e) {
@@ -50,11 +54,4 @@ public class HBoxListItem extends HBox {
         return selected;
     }
 
-    public Entry getEntry() {
-        return entry;
-    }
-
-    public void setEntry(Entry entry) {
-        this.entry = entry;
-    }
 }

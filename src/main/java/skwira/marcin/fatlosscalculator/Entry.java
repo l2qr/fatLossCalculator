@@ -9,29 +9,43 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 public class Entry {
 
+    @Setter
     private String name;
+    @Setter
     private LocalDate createdDate;
+    @Setter
     private LocalDate lastUpdateDate;
+    @Setter
     private Lookups.Sex sex;
+    @Setter
     private LocalDate dateOfBirth;
+    @Setter
     private double bodyMass;
+    @Setter
     private double fatPercentage;
+    @Setter
     private Lookups.Lifestyle lifestyle;
+    @Setter
     private Lookups.Condition condition;
+    @Setter
     private double targetFatPercentage;
+    @Setter
     private double weeklyBMLossPercentage;
+    @Setter
     private double carbFat;
-
+    @Setter
     private int id;
     private long age;
     private Lookups.BMI bmi;
@@ -166,6 +180,7 @@ public class Entry {
     }
 
 
+    @org.jetbrains.annotations.NotNull
     private Label createLabel(String text) {
         Label label = new Label();
         label.setMaxHeight(50);
@@ -229,15 +244,12 @@ public class Entry {
         listItem.getChildren().add(openBtn);
         listItem.setAlignment(Pos.CENTER);
 
-        openBtn.setOnMouseClicked(e -> {
-            DetailsSceneController ctrl = (DetailsSceneController) ScenesController.getInstance().switchScene(Lookups.SceneType.DETAILS);
-            ctrl.loadDetails(this);
-        });
+        openBtn.setOnMouseClicked(e -> ScenesController.getInstance().switchToDetailsScene(this));
 
         return listItem;
     }
 
-    public class EntryPropertyRow {
+    public static class EntryPropertyRow {
         private final StringProperty property = new SimpleStringProperty(this, "property");
         private final StringProperty value = new SimpleStringProperty(this, "value");
 
@@ -265,214 +277,38 @@ public class Entry {
 
     public List<EntryPropertyRow> getPropertiesRows() {
         List<EntryPropertyRow> rows = new ArrayList<>();
-        rows.add(new EntryPropertyRow("ID", Integer.toString(this.getId())));
-        rows.add(new EntryPropertyRow("Name", this.getName()));
-        rows.add(new EntryPropertyRow("Created Date", this.getCreatedDate().toString()));
-        rows.add(new EntryPropertyRow("Last Updated", this.getLastUpdateDate().toString()));
-        rows.add(new EntryPropertyRow("Sex", this.getSex().toString()));
-        rows.add(new EntryPropertyRow("Date Of Birth", this.getDateOfBirth().toString()));
-        rows.add(new EntryPropertyRow("Body Mass", String.format("%.1f", this.getBodyMass()) + "kg"));
-        rows.add(new EntryPropertyRow("Fat Percentage", String.format("%.1f", this.getFatPercentage() * 100) + "%"));
-        rows.add(new EntryPropertyRow("Lifestyle", this.getLifestyle().toString()));
-        rows.add(new EntryPropertyRow("Condition", this.getCondition().toString()));
-        rows.add(new EntryPropertyRow("Target Body Fat", String.format("%.1f", this.getTargetFatPercentage() * 100) + "%"));
-        rows.add(new EntryPropertyRow("Weekly Body Mass Loss", String.format("%.1f", this.getWeeklyBMLossPercentage() * 100) + "%"));
-        rows.add(new EntryPropertyRow("Carbs/Fats Ratio", String.format("%.0f", this.getCarbFat() * 100) + "/" + String.format("%.0f", 100 - this.getCarbFat() * 100)));
-        rows.add(new EntryPropertyRow("Age", Long.toString(this.getAge())));
-        rows.add(new EntryPropertyRow("BMI", this.getBmi().toString()));
-        rows.add(new EntryPropertyRow("Fat Mass", String.format("%.1f", this.getFatMass()) + "kg"));
-        rows.add(new EntryPropertyRow("Lean Mass", String.format("%.1f", this.getLeanMass()) + "kg"));
-        rows.add(new EntryPropertyRow("Base Metabolic Rate", String.format("%.0f", this.getBmr()) + "kcal"));
-        rows.add(new EntryPropertyRow("Fat Mass Loss Required", String.format("%.1f", this.getFmLossRequired()) + "kg"));
-        rows.add(new EntryPropertyRow("Body Mass Loss Required", String.format("%.1f", this.getBmLossRequired()) + "kg"));
-        rows.add(new EntryPropertyRow("Weekly Body Mass Loss", String.format("%.1f", this.getWeeklyBMLossKG()) + "kg"));
-        rows.add(new EntryPropertyRow("Time to target", String.format("%.1f", this.getTimeToTarget()) + " weeks"));
-        rows.add(new EntryPropertyRow("Fat Mass Loss Calorie Cost", String.format("%.0f", this.getFmLossCalorieCost()) + "kcal"));
-        rows.add(new EntryPropertyRow("Lean Body Mass Calorie Cost", String.format("%.0f", this.getLbmLossCalorieCost()) + "kcal"));
-        rows.add(new EntryPropertyRow("Total Body Mass Calorie Cost", String.format("%.0f", this.getTotalBMLossCalorieCost()) + "kcal"));
-        rows.add(new EntryPropertyRow("Required Daily Calorie Deficit", String.format("%.0f", this.getRequiredDailyCalorieDeficit()) + "kcal"));
-        rows.add(new EntryPropertyRow("Daily Calorie Intake", String.format("%.1f", this.getDailyCalorieIntake()) + "kcal"));
-        rows.add(new EntryPropertyRow("Protein", String.format("%.0f", this.getProteinGrams()) + "g"));
-        rows.add(new EntryPropertyRow("Carbs", String.format("%.0f", this.getCarbsGrams()) + "g"));
-        rows.add(new EntryPropertyRow("Fat", String.format("%.0f", this.getFatGrams()) + "g"));
-        rows.add(new EntryPropertyRow("Fiber", String.format("%.0f", this.getFiberGrams()) + "g"));
+        rows.add(new EntryPropertyRow("ID", Integer.toString(this.id)));
+        rows.add(new EntryPropertyRow("Name", this.name));
+        rows.add(new EntryPropertyRow("Created Date", this.createdDate.toString()));
+        rows.add(new EntryPropertyRow("Last Updated", this.lastUpdateDate.toString()));
+        rows.add(new EntryPropertyRow("Sex", this.sex.toString()));
+        rows.add(new EntryPropertyRow("Date Of Birth", this.dateOfBirth.toString()));
+        rows.add(new EntryPropertyRow("Body Mass", String.format("%.1f", this.bodyMass) + "kg"));
+        rows.add(new EntryPropertyRow("Fat Percentage", String.format("%.1f", this.fatPercentage * 100) + "%"));
+        rows.add(new EntryPropertyRow("Lifestyle", this.lifestyle.toString()));
+        rows.add(new EntryPropertyRow("Condition", this.condition.toString()));
+        rows.add(new EntryPropertyRow("Target Body Fat", String.format("%.1f", this.targetFatPercentage * 100) + "%"));
+        rows.add(new EntryPropertyRow("Weekly Body Mass Loss", String.format("%.1f", this.weeklyBMLossPercentage * 100) + "%"));
+        rows.add(new EntryPropertyRow("Carbs/Fats Ratio", String.format("%.0f", this.carbFat * 100) + "/" + String.format("%.0f", 100 - this.carbFat * 100)));
+        rows.add(new EntryPropertyRow("Age", Long.toString(this.age)));
+        rows.add(new EntryPropertyRow("BMI", this.bmi.toString()));
+        rows.add(new EntryPropertyRow("Fat Mass", String.format("%.1f", this.fatMass) + "kg"));
+        rows.add(new EntryPropertyRow("Lean Mass", String.format("%.1f", this.leanMass) + "kg"));
+        rows.add(new EntryPropertyRow("Base Metabolic Rate", String.format("%.0f", this.bmr) + "kcal"));
+        rows.add(new EntryPropertyRow("Fat Mass Loss Required", String.format("%.1f", this.fmLossRequired) + "kg"));
+        rows.add(new EntryPropertyRow("Body Mass Loss Required", String.format("%.1f", this.bmLossRequired) + "kg"));
+        rows.add(new EntryPropertyRow("Weekly Body Mass Loss", String.format("%.1f", this.weeklyBMLossKG) + "kg"));
+        rows.add(new EntryPropertyRow("Time to target", String.format("%.1f", this.timeToTarget) + " weeks"));
+        rows.add(new EntryPropertyRow("Fat Mass Loss Calorie Cost", String.format("%.0f", this.fmLossCalorieCost) + "kcal"));
+        rows.add(new EntryPropertyRow("Lean Body Mass Calorie Cost", String.format("%.0f", this.lbmLossCalorieCost) + "kcal"));
+        rows.add(new EntryPropertyRow("Total Body Mass Calorie Cost", String.format("%.0f", this.totalBMLossCalorieCost) + "kcal"));
+        rows.add(new EntryPropertyRow("Required Daily Calorie Deficit", String.format("%.0f", this.requiredDailyCalorieDeficit) + "kcal"));
+        rows.add(new EntryPropertyRow("Daily Calorie Intake", String.format("%.1f", this.dailyCalorieIntake) + "kcal"));
+        rows.add(new EntryPropertyRow("Protein", String.format("%.0f", this.proteinGrams) + "g"));
+        rows.add(new EntryPropertyRow("Carbs", String.format("%.0f", this.carbsGrams) + "g"));
+        rows.add(new EntryPropertyRow("Fat", String.format("%.0f", this.fatGrams) + "g"));
+        rows.add(new EntryPropertyRow("Fiber", String.format("%.0f", this.fiberGrams) + "g"));
         return rows;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public double getBodyMass() {
-        return bodyMass;
-    }
-
-    public void setBodyMass(double bodyMass) {
-        this.bodyMass = bodyMass;
-    }
-
-    public double getCarbFat() {
-        return carbFat;
-    }
-
-    public void setCarbFat(double carbFat) {
-        this.carbFat = carbFat;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Lookups.Condition getCondition() {
-        return condition;
-    }
-
-    public void setCondition(Lookups.Condition condition) {
-        this.condition = condition;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public double getFatPercentage() {
-        return fatPercentage;
-    }
-
-    public void setFatPercentage(double fatPercentage) {
-        this.fatPercentage = fatPercentage;
-    }
-
-    public Lookups.Lifestyle getLifestyle() {
-        return lifestyle;
-    }
-
-    public void setLifestyle(Lookups.Lifestyle lifestyle) {
-        this.lifestyle = lifestyle;
-    }
-
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Lookups.Sex getSex() {
-        return sex;
-    }
-
-    public void setSex(Lookups.Sex sex) {
-        this.sex = sex;
-    }
-
-    public double getTargetFatPercentage() {
-        return targetFatPercentage;
-    }
-
-    public void setTargetFatPercentage(double targetFatPercentage) {
-        this.targetFatPercentage = targetFatPercentage;
-    }
-
-    public double getWeeklyBMLossPercentage() {
-        return weeklyBMLossPercentage;
-    }
-
-    public void setWeeklyBMLossPercentage(double weeklyBMLossPercentage) {
-        this.weeklyBMLossPercentage = weeklyBMLossPercentage;
-    }
-
-    public long getAge() {
-        return age;
-    }
-
-    public Lookups.BMI getBmi() {
-        return bmi;
-    }
-
-    public double getFatMass() {
-        return fatMass;
-    }
-
-    public double getLeanMass() {
-        return leanMass;
-    }
-
-    public double getBmr() {
-        return bmr;
-    }
-
-    public double getFmLossRequired() {
-        return fmLossRequired;
-    }
-
-    public double getBmLossRequired() {
-        return bmLossRequired;
-    }
-
-    public double getWeeklyBMLossKG() {
-        return weeklyBMLossKG;
-    }
-
-    public double getTimeToTarget() {
-        return timeToTarget;
-    }
-
-    public double getFmLossCalorieCost() {
-        return fmLossCalorieCost;
-    }
-
-    public double getLbmLossCalorieCost() {
-        return lbmLossCalorieCost;
-    }
-
-    public double getTotalBMLossCalorieCost() {
-        return totalBMLossCalorieCost;
-    }
-
-    public double getRequiredDailyCalorieDeficit() {
-        return requiredDailyCalorieDeficit;
-    }
-
-    public double getDailyCalorieIntake() {
-        return dailyCalorieIntake;
-    }
-
-    public double getProteinGrams() {
-        return proteinGrams;
-    }
-
-    public double getCarbsGrams() {
-        return carbsGrams;
-    }
-
-    public double getFatGrams() {
-        return fatGrams;
-    }
-
-    public double getFiberGrams() {
-        return fiberGrams;
     }
 
 }
