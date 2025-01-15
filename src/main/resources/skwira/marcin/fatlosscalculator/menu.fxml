@@ -7,68 +7,75 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<HBox fx:id="menu" alignment="CENTER_RIGHT" fillHeight="false" prefHeight="60.0" prefWidth="600.0" spacing="20.0" styleClass="dark-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.MenuController">
-    <children>
-        <Button fx:id="menuHomeBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Home">
-            <graphic>
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@home.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="menuBackBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Back">
-            <graphic>
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@back.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Pane fx:id="menuSpacer" prefHeight="40.0" prefWidth="600.0" />
-        <Button fx:id="menuAddBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Add" HBox.hgrow="NEVER">
-            <graphic>
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@add.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <HBox.margin>
-                <Insets />
-            </HBox.margin>
-        </Button>
-        <Button fx:id="menuEditBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Edit">
-            <graphic>
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@edit.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="menuSaveBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Save">
-            <graphic>
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@save.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="menuRemoveBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Remove">
-            <graphic>
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@remove.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-    </children>
+<HBox fx:id="menu" alignment="CENTER_RIGHT" fillHeight="false" prefHeight="60.0" prefWidth="600.0" spacing="20.0"
+      styleClass="dark-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.MenuController">
     <padding>
-        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
     </padding>
+    <Button fx:id="menuHomeBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0"
+            minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Home">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@home.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="menuBackBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0" maxWidth="40.0"
+            minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Back">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@back.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Pane fx:id="menuSpacer" prefHeight="40.0" prefWidth="600.0"/>
+    <Button fx:id="menuAddBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0"
+            maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0"
+            text="Add" HBox.hgrow="NEVER">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@add.png"/>
+            </ImageView>
+        </graphic>
+        <HBox.margin>
+            <Insets/>
+        </HBox.margin>
+    </Button>
+    <Button fx:id="menuEditBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0"
+            maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0"
+            text="Edit">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@edit.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="menuCopyBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0"
+            maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0"
+            text="Copy">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@copy.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="menuSaveBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0"
+            maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0"
+            text="Save">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@save.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="menuRemoveBtn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="40.0"
+            maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0"
+            text="Remove">
+        <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@remove.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
 </HBox>

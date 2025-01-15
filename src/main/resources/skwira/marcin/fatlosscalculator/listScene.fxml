@@ -6,23 +6,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="listScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.ListSceneController">
-    <children>
-        <fx:include fx:id="menu" source="menu.fxml" />
-      <HBox layoutY="60.0" prefHeight="30.0" prefWidth="600.0">
-         <children>
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="330.0" minWidth="330.0" mnemonicParsing="false" styleClass="heading" text="Name" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" styleClass="heading" text="Sex" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" styleClass="heading" text="Age" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false" styleClass="heading" text="Body mass" />
-            <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" styleClass="heading" text="Target" />
-            <Pane maxHeight="30.0" maxWidth="35.0" minHeight="30.0" minWidth="35.0" />
-         </children>
-      </HBox>
-        <ScrollPane fx:id="listScrollPane" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" layoutY="92.0" prefHeight="360.0" prefWidth="600.0" styleClass="darker-bg">
-            <content>
-                <AnchorPane fx:id="entriesList" minHeight="0.0" minWidth="0.0" prefHeight="358.0" prefWidth="600.0" styleClass="darker-bg" />
-            </content>
-        </ScrollPane>
-    </children>
+<Pane fx:id="listScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="skwira.marcin.fatlosscalculator.ListSceneController">
+    <fx:include fx:id="menu" source="menu.fxml"/>
+    <HBox layoutY="60.0" prefHeight="30.0" prefWidth="600.0" styleClass="list-headings">
+        <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="300.0" minWidth="300.0" mnemonicParsing="false"
+                styleClass="heading" text="Name" HBox.hgrow="NEVER"/>
+        <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false"
+                styleClass="heading" text="Sex" HBox.hgrow="NEVER"/>
+        <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false"
+                styleClass="heading" text="Age" HBox.hgrow="NEVER"/>
+        <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="75.0" minWidth="75.0" mnemonicParsing="false"
+                styleClass="heading" text="Body mass" HBox.hgrow="NEVER"/>
+        <Button alignment="BASELINE_LEFT" maxHeight="30.0" maxWidth="50.0" minWidth="50.0" mnemonicParsing="false"
+                styleClass="heading" text="Target" HBox.hgrow="NEVER"/>
+    </HBox>
+    <ScrollPane fx:id="listScrollPane" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" layoutY="92.0" maxHeight="360.0"
+                minHeight="360.0" prefHeight="360.0" prefWidth="600.0" styleClass="darker-bg">
+        <AnchorPane fx:id="entriesList" minHeight="358.0" minWidth="0.0" prefHeight="358.0" prefWidth="600.0"
+                    styleClass="darker-bg"/>
+    </ScrollPane>
 </Pane>

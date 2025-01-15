@@ -17,6 +17,9 @@ public final class ScenesController {
     private Stage stage;
     @Setter
     private Entry entry;
+    /* TODO make app remember navigation history.
+        * Change back button behaviour to go back to previous page
+        * Utilise the home button to go to the list scene */
 
     private ScenesController() {}
 
@@ -41,6 +44,11 @@ public final class ScenesController {
 
     public Object switchToCreateScene() {
         return switchScene(Lookups.SceneType.CREATE);
+    }
+    public Object switchToCreateScene(Entry e) {
+        CreateSceneController ctrl = (CreateSceneController) switchScene(Lookups.SceneType.CREATE);
+        ctrl.getCreateFormController().setValues(e);
+        return ctrl;
     }
 
     public Object switchToListScene() {

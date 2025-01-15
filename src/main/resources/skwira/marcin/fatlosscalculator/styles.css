@@ -6,47 +6,11 @@
     -fx-error-color: #f55142;
 }
 
-.createListItem {
-    -fx-pref-width: 580;
-}
-.createListItemControl {
-    -fx-pref-width: 480;
-    -fx-max-width: 480;
-
-}
-
-#buttonVBox {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-    -fx-border-color: transparent;
-    -fx-background: transparent;
-}
-
 .button {
     -fx-background-color: transparent;
 }
 .button:hover {
     -fx-translate-y: -2px;
-}
-
-.label,
-.radio-button,
-.text-field {
-    -fx-text-fill: -fx-text-color;
-    -fx-font-size: 16px;
-    -fx-font-weight: 500;
-    -fx-background-color: transparent;
-    -fx-border-width: 2;
-    -fx-border-radius: 2;
-    -fx-border-color: transparent;
-    -fx-background: transparent;
-}
-.hboxlistitem .label {
-    -fx-font-size: 12px;
-}
-
-.hboxlistitem:selected {
-    -fx-background-color: #434647;
 }
 
 /* Scroll pane scroll bars */
@@ -191,6 +155,8 @@
  }
 
  /* TableView */
+
+ /* TODO remove vertical border between columns */
 .table-view {
     -fx-background-color: -fx-primary-color;
     -fx-text-fill: -fx-text-color;
@@ -221,19 +187,59 @@
     -fx-background-color: -fx-primary-color;
 }
 
-.heading {
-    -fx-padding: 0 0 0 5;
+/* Create Form */
+.createListItem {
+    -fx-pref-width: 580;
 }
-
-.invalid {
-    -fx-border-color: -fx-error-color;
+.createListItemControl {
+    -fx-pref-width: 480;
+    -fx-max-width: 480;
+    -fx-pref-height: 39;
 }
-
+.label,
+.form-label,
+.radio-button,
+.text-field {
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-background-color: transparent;
+    -fx-border-width: 2;
+    -fx-border-radius: 2;
+    -fx-border-color: transparent;
+    -fx-background: transparent;
+}
 .error-label {
     -fx-text-fill: -fx-error-color;
     -fx-font-size: 12px;
     -fx-font-weight: 300;
 }
+
+/* List */
+.hboxlistitem {
+    -fx-padding: 0;
+    -fx-spacing: 0;
+    -fx-alignment: center;
+}
+.list-label {
+    -fx-text-fill: -fx-text-color;
+    -fx-alignment: baseline-left;
+    -fx-font-size: 12px;
+    -fx-padding: 0 0 0 -15;
+
+}
+.hboxlistitem:selected {
+    -fx-background-color: #434647;
+}
+.heading {
+    -fx-text-fill: white;
+}
+
+
+.invalid {
+    -fx-border-color: -fx-error-color;
+}
+
 .darker-bg {
     -fx-background-color: -fx-primary-color;
 }

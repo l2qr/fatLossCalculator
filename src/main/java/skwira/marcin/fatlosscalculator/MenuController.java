@@ -1,9 +1,7 @@
 package skwira.marcin.fatlosscalculator;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -13,11 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import lombok.Setter;
 
+import java.sql.ResultSet;
 import java.util.Iterator;
 
 public class MenuController {
 
-    /* TODO add copy button & logic*/
     @FXML
     private HBox menu;
     @FXML
@@ -28,6 +26,8 @@ public class MenuController {
     private Button menuAddBtn;
     @FXML
     private Button menuEditBtn;
+    @FXML
+    private Button menuCopyBtn;
     @FXML
     private Button menuRemoveBtn;
     @FXML
@@ -51,6 +51,7 @@ public class MenuController {
         menuAddBtn.setOnMouseClicked(this::add);
         menuBackBtn.setOnMouseClicked(this::back);
         menuEditBtn.setOnMouseClicked(this::edit);
+        menuCopyBtn.setOnMouseClicked(this::copy);
         menuSaveBtn.setOnMouseClicked(this::save);
         menuRemoveBtn.setOnMouseClicked(this::remove);
         switch (sc.getSceneType()) {
@@ -58,11 +59,13 @@ public class MenuController {
                 menu.getChildren().remove(menuHomeBtn);
                 menu.getChildren().remove(menuAddBtn);
                 menu.getChildren().remove(menuEditBtn);
+                menu.getChildren().remove(menuCopyBtn);
             }
             case LIST -> {
                 menu.getChildren().remove(menuHomeBtn);
                 menu.getChildren().remove(menuBackBtn);
                 menu.getChildren().remove(menuEditBtn);
+                menu.getChildren().remove(menuCopyBtn);
                 menu.getChildren().remove(menuSaveBtn);
                 menu.getChildren().remove(menuRemoveBtn);
             }
@@ -87,6 +90,7 @@ public class MenuController {
             switch (bt) {
                 case ADD -> menu.getChildren().add(menuAddBtn);
                 case EDIT -> menu.getChildren().add(menuEditBtn);
+                case COPY -> menu.getChildren().add(menuCopyBtn);
                 case SAVE -> menu.getChildren().add(menuSaveBtn);
                 case REMOVE -> menu.getChildren().add(menuRemoveBtn);
                 case BACK -> menu.getChildren().add(0, menuBackBtn);
@@ -117,6 +121,40 @@ public class MenuController {
         }
     }
 
+    private void copy(Event e) {
+        if (sc.getSceneType() == Lookups.SceneType.LIST) {
+            Entry entry = listSceneController.getSelectedEntry();
+            ObservableList<Node> entries = listSceneController.getEntriesList().getChildren();
+            int id = HelloApplication.dbController.insertEntry(entry);
+            try (ResultSet rs = HelloApplication.dbController.selectEntry(id)){
+                if(rs.next()) {
+                    Entry entryCopy = new Entry(
+                            rs.getInt("id"),
+                            rs.getDouble("body_mass"),
+                            rs.getDouble("carb_fat_distribution"),
+                            rs.getString("created"),
+                            rs.getString("condition"),
+                            rs.getString("dob"),
+                            rs.getDouble("fat_perc"),
+                            rs.getString("last_updated"),
+                            rs.getString("lifestyle"),
+                            rs.getString("record_name"),
+                            rs.getString("sex"),
+                            rs.getDouble("target_fat_perc"),
+                            rs.getDouble("weekly_loss")
+                    );
+                    listSceneController.addListItem(entryCopy);
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        if(sc.getSceneType() == Lookups.SceneType.DETAILS) {
+            sc.switchToCreateScene(detailsSceneController.getEntry());
+        }
+    }
+
+
     private void save(Event e) {
         if(createFormController.isValid()) {
             if (sc.getSceneType() == Lookups.SceneType.CREATE) {
@@ -137,49 +175,62 @@ public class MenuController {
     private void remove(Event e) {
         switch(sc.getSceneType()) {
             case CREATE, EDIT -> createFormController.clearValues();
-            case DETAILS -> {
-                showDialog(detailsSceneController.getEntry().getId(), null);
-            }
-            case LIST -> {
-                ObservableList<Node> entries = listSceneController.getEntriesList().getChildren();
-                Iterator<Node> it = entries.iterator();
-                while (it.hasNext()) {
-                    Node node = it.next();
-                    if (node.getTypeSelector().equals("HBoxListItem")) {
-                        if (((HBoxListItem) node).isSelected()) {
-                            showDialog(((HBoxListItem) node).getEntry().getId(), it);
-                        }
-                    }
-                }
-                for (int i = 0; i < entries.size(); i++) {
-                    Node entry = entries.get(i);
-                    if (entry.getTypeSelector().equals("HBoxListItem")) {
-                        entry.setLayoutY(i * Entry.LIST_ITEM_HEIGHT);
-                    }
-                }
-            }
+            case DETAILS -> showDialog(detailsSceneController.getEntry().getId());
+            case LIST -> showDialog(listSceneController.getEntriesList().getChildren());
         }
     }
 
-    private void showDialog(int id, Iterator<Node> it) {
-        Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationDialog.setTitle("Confirm deletion");
-        confirmationDialog.setHeaderText(null);
-        confirmationDialog.setContentText("Are you sure you want to remove this record?");
-        confirmationDialog.getDialogPane().getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+    private void showDialog(int id) {
+        Alert confirmationDialog = createRemoveDialog();
         Stage dialogStage = (Stage) confirmationDialog.getDialogPane().getScene().getWindow();
         Button ok = (Button) confirmationDialog.getDialogPane().lookupButton(ButtonType.OK);
         ok.setOnAction(event -> {
             HelloApplication.dbController.deleteEntry(id);
-            if(it != null) {
-                it.remove();
-            }else {
-                sc.switchToListScene();
-            }
+            sc.switchToListScene();
             confirmationDialog.close();
         });
         confirmationDialog.show();
         FXWinUtil.setDarkMode(dialogStage, true);
     }
 
+
+    private void showDialog(ObservableList<Node> entries) {
+        Alert confirmationDialog = createRemoveDialog();
+        Stage dialogStage = (Stage) confirmationDialog.getDialogPane().getScene().getWindow();
+        Button ok = (Button) confirmationDialog.getDialogPane().lookupButton(ButtonType.OK);
+        ok.setOnAction(event -> {
+            Iterator<Node> it = entries.iterator();
+            while (it.hasNext()) {
+                Node node = it.next();
+                if (node.getTypeSelector().equals("HBoxListItem")) {
+                    if (((HBoxListItem) node).isSelected()) {
+                        HelloApplication.dbController.deleteEntry(((HBoxListItem) node).getEntry().getId());
+                        it.remove();
+                    }
+                }
+            }
+            for (int i = 0; i < entries.size(); i++) {
+                Node entry = entries.get(i);
+                if (entry.getTypeSelector().equals("HBoxListItem")) {
+                    entry.setLayoutY(i * Entry.LIST_ITEM_HEIGHT);
+                }
+            }
+            listSceneController.resizeList();
+            hideButton(Lookups.MenuBtnType.EDIT);
+            hideButton(Lookups.MenuBtnType.COPY);
+            hideButton(Lookups.MenuBtnType.REMOVE);
+            confirmationDialog.close();
+        });
+        confirmationDialog.show();
+        FXWinUtil.setDarkMode(dialogStage, true);
+    }
+
+    private Alert createRemoveDialog() {
+        Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationDialog.setTitle("Confirm deletion");
+        confirmationDialog.setHeaderText(null);
+        confirmationDialog.setContentText("Are you sure you want to remove this record?");
+        confirmationDialog.getDialogPane().getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        return  confirmationDialog;
+    }
 }
