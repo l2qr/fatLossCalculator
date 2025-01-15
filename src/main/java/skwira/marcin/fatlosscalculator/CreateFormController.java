@@ -1,17 +1,16 @@
 package skwira.marcin.fatlosscalculator;
 
 import javafx.beans.property.*;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,11 +62,18 @@ public class CreateFormController {
     private Label fatPercError;
     @FXML
     private Label targetFatError;
+    @FXML
+    private Label lifestyleError;
+    @FXML
+    private Label conditionError;
 
-    private Set<Node> invalidInputs = new HashSet<>();
+
+    private final Set<Node> invalidInputs = new HashSet<>();
 
     @FXML
     public void initialize() {
+        datepicker.setValue(LocalDate.now().minusYears(20));
+        datepicker.commitValue();
         lifestyleChoice.getItems().addAll(Lookups.Lifestyle.getStrings());
         conditionChoice.getItems().addAll(Lookups.Condition.getStrings());
         carbFatSlider.setLabelFormatter(new StringConverter<>() {
@@ -82,11 +88,51 @@ public class CreateFormController {
             }
         });
         sexRadio.selectToggle(maleRadio);
-        nameTextfield.focusedProperty().addListener(this::nameValidateListener);
-        bodyMassTextfield.focusedProperty().addListener(this::textfieldDoubleValidateListener);
-        fatTextfield.focusedProperty().addListener(this::textfieldDoubleValidateListener);
-        targetFatTextfield.focusedProperty().addListener(this::textfieldDoubleValidateListener);
-        datepicker.focusedProperty().addListener(this::datepickerValidateListener);
+        nameTextfield.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            TextField tf = (TextField) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) tf.getParent().getChildrenUnmodifiable().get(tf.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) {
+                validateTextfieldString(tf, errorLabel);
+            }
+        });
+        bodyMassTextfield.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            TextField tf = (TextField) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) tf.getParent().getChildrenUnmodifiable().get(tf.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) { // when focus lost
+                validateTextfieldDouble(tf, errorLabel, 1d, 400d);
+            }
+        });
+        fatTextfield.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            TextField tf = (TextField) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) tf.getParent().getChildrenUnmodifiable().get(tf.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) { // when focus lost
+                validateTextfieldDouble(tf, errorLabel, 1d, 90d);
+            }
+        });
+        targetFatTextfield.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            TextField tf = (TextField) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) tf.getParent().getChildrenUnmodifiable().get(tf.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) { // when focus lost
+                double maxTarget = 89.0;
+                if(fatTextfield.getText() != null && !fatTextfield.getText().isEmpty())
+                    maxTarget = Double.parseDouble(fatTextfield.getText()) - 1;
+                validateTextfieldDouble(tf, errorLabel, 1d, maxTarget);
+            }
+        });
+        datepicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            DatePicker datePicker = (DatePicker) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) datePicker.getParent().getChildrenUnmodifiable().get(datePicker.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) { // when focus lost
+                validateDatepicker(datePicker, errorLabel);
+            }
+        });
+        lifestyleChoice.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            ChoiceBox<String> cb = (ChoiceBox<String>) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) cb.getParent().getChildrenUnmodifiable().get(cb.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) { // when focus lost
+                validateRequiredChoice(cb, errorLabel);
+            }
+        });
         lifestyleHelp.setOnMouseClicked(event -> {
             Alert help = new Alert(Alert.AlertType.INFORMATION);
             help.setHeaderText("Lifestyle");
@@ -104,6 +150,13 @@ public class CreateFormController {
             Stage dialogStage = (Stage) help.getDialogPane().getScene().getWindow();
             help.show();
             FXWinUtil.setDarkMode(dialogStage, true);
+        });
+        conditionChoice.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            ChoiceBox<String> cb = (ChoiceBox<String>) ((ReadOnlyBooleanProperty) observable).getBean();
+            Label errorLabel = (Label) cb.getParent().getChildrenUnmodifiable().get(cb.getParent().getChildrenUnmodifiable().size() - 1);
+            if (!newValue) { // when focus lost
+                validateRequiredChoice(cb, errorLabel);
+            }
         });
         conditionHelp.setOnMouseClicked(event -> {
             Alert help = new Alert(Alert.AlertType.INFORMATION);
@@ -188,57 +241,77 @@ public class CreateFormController {
             label.setManaged(true);
             invalidInputs.add(node);
         }
-        System.out.println(invalidInputs.size());
     }
 
-    private void textfieldDoubleValidateListener(ObservableValue<? extends Boolean> observable, Boolean oldVal, Boolean newVal) {
-        TextField tf = (TextField) ((ReadOnlyBooleanProperty) observable).getBean();
-        Label errorLabel = (Label) tf.getParent().getChildrenUnmodifiable().get(tf.getParent().getChildrenUnmodifiable().size() - 1);
-        if (!newVal) { // when focus lost
-            try {
-                Double.parseDouble(tf.getText());
-                changeControlState(tf, errorLabel, true);
-            } catch (NumberFormatException e) {
-                String error = "Invalid input, must be a valid number";
-                if(e.getMessage().equals("empty String"))
-                    error = "Can not be empty";
-                changeControlState(tf, errorLabel, false, error);
-            }
-        }
+    private void validateTextfieldDouble(TextField tf, Label errorLabel) {
+        validateTextfieldDouble(tf, errorLabel, Double.MIN_VALUE, Double.MAX_VALUE);
     }
 
-    private void datepickerValidateListener(ObservableValue<? extends Boolean> observable, Boolean oldVal, Boolean newVal) {
-        DatePicker datePicker = (DatePicker) ((ReadOnlyBooleanProperty) observable).getBean();
-        Label errorLabel = (Label) datePicker.getParent().getChildrenUnmodifiable().get(datePicker.getParent().getChildrenUnmodifiable().size() - 1);
-        if (!newVal) { // when focus lost
-            try {
-                datePicker.getConverter().fromString(
-                        datePicker.getEditor().getText());
-                changeControlState(datePicker, errorLabel, true);
-            } catch (DateTimeParseException e) {
-                // Alert user here
-                changeControlState(datePicker, errorLabel, false, "Invalid date");
-            }
-        }
-    }
-
-    private void nameValidateListener(ObservableValue<? extends Boolean> observable, Boolean oldVal, Boolean newVal) {
-        TextField tf = (TextField) ((ReadOnlyBooleanProperty) observable).getBean();
-        Label errorLabel = (Label) tf.getParent().getChildrenUnmodifiable().get(tf.getParent().getChildrenUnmodifiable().size() - 1);
-        if (!newVal) {
-            if(!tf.getText().isEmpty()) {
-                changeControlState(tf, errorLabel, true);
+    private void validateTextfieldDouble(TextField tf, Label errorLabel, Double from, Double to) {
+        String error = "Invalid input, must be a valid number";
+        boolean valid = false;
+        try {
+            double input = Double.parseDouble(tf.getText());
+            if(input >= from && input <= to) {
+                valid = true;
             } else {
-                changeControlState(tf, errorLabel, false, "Can not be empty");
+                error = String.format("Invalid input. Must be a valid number in the range %.1f - %.1f", from, to);
             }
+        } catch (NumberFormatException e) {
+            if(e.getMessage().equals("empty String"))
+                error = "Can not be empty";
+        } finally {
+            changeControlState(tf, errorLabel, valid, error);
+        }
+    }
+
+    private void validateDatepicker(DatePicker datePicker, Label errorLabel) {
+        String error = "Invalid date";
+        boolean valid = false;
+        try {
+            datePicker.getConverter().fromString(
+                    datePicker.getEditor().getText());
+            if(datePicker.getValue() == null) {
+                error = "Don't be shy, select a date. We won't tell anyone";
+            } else if(datePicker.getValue().isAfter(LocalDate.now())){
+                error = "Aren't you a little to young to exist?";
+            } else {
+                valid = true;
+            }
+        } catch (DateTimeParseException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            changeControlState(datepicker, errorLabel, valid, error);
+        }
+    }
+
+    private void validateTextfieldString(TextField tf, Label errorLabel) {
+        if(tf.getText()!= null && !tf.getText().isBlank()) {
+            changeControlState(tf, errorLabel, true);
+        } else {
+            changeControlState(tf, errorLabel, false, "Can not be empty");
+        }
+    }
+
+    private void validateRequiredChoice(ChoiceBox<String> cb, Label errorLabel) {
+        if(cb.getValue() != null && !cb.getValue().isBlank()) {
+            changeControlState(cb, errorLabel, true);
+        } else {
+            changeControlState(cb, errorLabel, false, "Select a value");
         }
     }
 
     public boolean isValid() {
-        /* TODO separate validation methods from listeners
-            and call validations here seperately for each input that needs checking
-            to have a full check when user tries to save
-            */
+        validateTextfieldString(nameTextfield, nameError);
+        validateTextfieldDouble(bodyMassTextfield, bodyMassError, 1.0, 400.0);
+        validateTextfieldDouble(fatTextfield, fatPercError, 1.0, 90.0);
+        double maxTarget = 89.0;
+        if(fatTextfield.getText() != null && !fatTextfield.getText().isEmpty())
+            maxTarget = Double.parseDouble(fatTextfield.getText()) - 1;
+        validateTextfieldDouble(targetFatTextfield,targetFatError, 1.0, maxTarget);
+        validateDatepicker(datepicker, dateError);
+        validateRequiredChoice(lifestyleChoice,lifestyleError);
+        validateRequiredChoice(conditionChoice,conditionError);
         return invalidInputs.isEmpty();
     }
 }
