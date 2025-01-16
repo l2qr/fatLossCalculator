@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class ListSceneController {
@@ -43,10 +42,12 @@ public class ListSceneController {
             listItem.toggle();
             if (listItem.isSelected()) {
                 menuController.showButton(Lookups.MenuBtnType.EDIT);
+                menuController.showButton(Lookups.MenuBtnType.COPY);
                 menuController.showButton(Lookups.MenuBtnType.REMOVE);
                 selectedEntry = listItem.getEntry();
             } else {
                 menuController.hideButton(Lookups.MenuBtnType.EDIT);
+                menuController.hideButton(Lookups.MenuBtnType.COPY);
                 menuController.hideButton(Lookups.MenuBtnType.REMOVE);
                 selectedEntry = null;
             }
@@ -56,20 +57,9 @@ public class ListSceneController {
     @FXML
     public void initialize() {
         menuController.setListSceneController(this);
-        ResultSet entries;
-        try {
-            entries = HelloApplication.dbController.selectEntries();
+        try (ResultSet entries = HelloApplication.dbController.selectEntries()){
             int i = 0;
-            ResultSetMetaData rsmd = entries.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
             while (entries.next()) {
-                /*for (int j = 1; j <= columnsNumber; j++) {
-                    if (j > 1) System.out.print(",  ");
-                    System.out.print(rsmd.getColumnName(j) + ": ");
-                    String columnValue = entries.getString(j);
-                    System.out.print(columnValue);
-                }
-                System.out.println();*/
                 Entry e = new Entry(
                         entries.getInt("id"),
                         entries.getDouble("body_mass"),
@@ -91,9 +81,22 @@ public class ListSceneController {
                 entriesList.getChildren().add(item);
                 i++;
             }
+            resizeList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public void addListItem(Entry entry) {
+        HBoxListItem item = entry.getListItem();
+        item.setLayoutY((entriesList.getChildren().size() * Entry.LIST_ITEM_HEIGHT));
+        item.addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+        entriesList.getChildren().add(item);
+        resizeList();
+    }
+
+    public void resizeList() {
+        double height = entriesList.getChildren().size() * Entry.LIST_ITEM_HEIGHT;
+        entriesList.setPrefHeight(height);
+    }
 }

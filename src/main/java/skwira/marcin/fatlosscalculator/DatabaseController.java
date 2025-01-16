@@ -41,7 +41,7 @@ public class DatabaseController {
         }
     }
 
-    protected void insertEntry(Entry form) {
+    protected int insertEntry(Entry form) {
         String query = """
                 INSERT INTO "entries" (
                     "record_name",
@@ -57,8 +57,10 @@ public class DatabaseController {
                     "weekly_loss",
                     "carb_fat_distribution")
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""";
+        PreparedStatement preparedStatement;
+        int affectedRows = 0;
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, form.getName());
             preparedStatement.setString(2, LocalDate.now().toString());
             preparedStatement.setString(3, LocalDate.now().toString());
@@ -71,10 +73,23 @@ public class DatabaseController {
             preparedStatement.setDouble(10, form.getTargetFatPercentage());
             preparedStatement.setDouble(11, form.getWeeklyBMLossPercentage());
             preparedStatement.setDouble(12, form.getCarbFat());
-            preparedStatement.execute();
+            affectedRows = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        int resultId = -1;
+        if(affectedRows==0) {
+            System.out.println("Failed to create record");
+        } else {
+            try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                if(rs.next()) {
+                    resultId = rs.getInt(1);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return resultId;
     }
 
     protected void updateEntry(Entry entry) {
@@ -121,6 +136,12 @@ public class DatabaseController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    protected ResultSet selectEntry(int id) throws SQLException {
+        String selectQuery = "SELECT * FROM entries WHERE \"id\"=" + id;
+        return conn.createStatement().executeQuery(selectQuery);
     }
 
     protected ResultSet selectEntries() throws SQLException {

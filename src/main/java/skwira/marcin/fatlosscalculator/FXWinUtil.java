@@ -22,7 +22,9 @@ public class FXWinUtil {
             return null;
         }
     }
-
+    /* Requires adding these to the VM run configuration options
+    * --add-opens javafx.graphics/javafx.stage=skwira.marcin.fatlosscalculator --add-opens javafx.graphics/com.sun.javafx.tk.quantum=skwira.marcin.fatlosscalculator
+    * */
     public static void setDarkMode(Stage stage, boolean darkMode) {
         val hwnd = FXWinUtil.getNativeHandleForStage(stage);
         val dwmapi = Dwmapi.INSTANCE;

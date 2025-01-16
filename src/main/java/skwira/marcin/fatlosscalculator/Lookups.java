@@ -91,6 +91,7 @@ public class Lookups {
         ADD("menuAddBtn"),
         BACK("menuBackBtn"),
         EDIT("menuEditBtn"),
+        COPY("menuCopyBtn"),
         SAVE("menuSaveBtn"),
         REMOVE("menuRemoveBtn");
 

@@ -9,6 +9,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Priority;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -183,18 +184,19 @@ public class Entry {
     @org.jetbrains.annotations.NotNull
     private Label createLabel(String text) {
         Label label = new Label();
-        label.setMaxHeight(50);
+        label.setMaxHeight(60);
         label.setText(text);
-        label.setAlignment(Pos.BASELINE_LEFT);
-        label.setPadding(new Insets(0, 0, 0, 7));
+        HBoxListItem.setHgrow(label, Priority.NEVER);
+        label.getStyleClass().add("list-label");
         return label;
     }
 
     public HBoxListItem getListItem() {
         Label nameLabel = createLabel(this.name);
-        nameLabel.setMaxWidth(330);
-        nameLabel.setMinWidth(330);
-        nameLabel.setPadding(new Insets(0, 0, 0, 5));
+        nameLabel.setMaxWidth(300);
+        nameLabel.setMinWidth(300);
+        nameLabel.setWrapText(true);
+
         Label sexLabel = createLabel(this.sex.toString());
         sexLabel.setMinWidth(70);
         sexLabel.setMaxWidth(70);
@@ -202,17 +204,14 @@ public class Entry {
         Label ageLabel = createLabel(Long.toString(this.age));
         ageLabel.setMinWidth(40);
         ageLabel.setMaxWidth(40);
-        ageLabel.setPadding(new Insets(0, 0, 0, 5));
 
         Label bodymassLabel = createLabel(String.format("%.1fkg", this.bodyMass));
         bodymassLabel.setMinWidth(75);
         bodymassLabel.setMaxWidth(75);
-        bodymassLabel.setPadding(new Insets(0, 0, 0, 5));
 
         Label targetLabel = createLabel(String.format("%.1f%%", this.targetFatPercentage * 100));
-        targetLabel.setMinWidth(50);
-        targetLabel.setMaxWidth(50);
-        targetLabel.setPadding(new Insets(0, 0, 0, 5));
+        targetLabel.setMinWidth(40);
+        targetLabel.setMaxWidth(40);
 
         ImageView imageView = new ImageView();
         imageView.setFitHeight(30);
@@ -226,6 +225,7 @@ public class Entry {
         }
 
         Button openBtn = new Button();
+        openBtn.setMinHeight(30);
         openBtn.setMaxHeight(30);
         openBtn.setMaxWidth(30);
         openBtn.setMinWidth(30);
@@ -235,7 +235,9 @@ public class Entry {
         HBoxListItem listItem = new HBoxListItem(this);
         listItem.setPrefHeight(LIST_ITEM_HEIGHT);
         listItem.setPrefWidth(600);
-        listItem.setPadding(new Insets(5, 5, 5, 0));
+        listItem.setPadding(Insets.EMPTY);
+        listItem.setSpacing(0);
+
         listItem.getChildren().add(nameLabel);
         listItem.getChildren().add(sexLabel);
         listItem.getChildren().add(ageLabel);
