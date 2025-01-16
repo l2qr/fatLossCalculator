@@ -155,8 +155,6 @@
  }
 
  /* TableView */
-
- /* TODO remove vertical border between columns */
 .table-view {
     -fx-background-color: -fx-primary-color;
     -fx-text-fill: -fx-text-color;
@@ -173,6 +171,7 @@
 }
 .table-view .table-cell{
     -fx-text-fill: -fx-text-color;
+    -fx-border-width: 0px;
 }
 .table-row-cell{
     -fx-background-color: -fx-secondary-color;
@@ -186,6 +185,10 @@
 .table-view .filler {
     -fx-background-color: -fx-primary-color;
 }
+.table-view{
+    padding: 3px;
+}
+
 
 /* Create Form */
 .createListItem {
