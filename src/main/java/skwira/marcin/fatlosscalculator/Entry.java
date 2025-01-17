@@ -181,7 +181,6 @@ public class Entry {
     }
 
 
-    @org.jetbrains.annotations.NotNull
     private Label createLabel(String text) {
         Label label = new Label();
         label.setMaxHeight(60);

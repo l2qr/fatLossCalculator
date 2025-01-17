@@ -125,8 +125,8 @@ public class MenuController {
         if (sc.getSceneType() == Lookups.SceneType.LIST) {
             Entry entry = listSceneController.getSelectedEntry();
             ObservableList<Node> entries = listSceneController.getEntriesList().getChildren();
-            int id = HelloApplication.dbController.insertEntry(entry);
-            try (ResultSet rs = HelloApplication.dbController.selectEntry(id)){
+            int id = App.dbController.insertEntry(entry);
+            try (ResultSet rs = App.dbController.selectEntry(id)){
                 if(rs.next()) {
                     Entry entryCopy = new Entry(
                             rs.getInt("id"),
@@ -158,9 +158,9 @@ public class MenuController {
     private void save(Event e) {
         if(createFormController.isValid()) {
             if (sc.getSceneType() == Lookups.SceneType.CREATE) {
-                HelloApplication.dbController.insertEntry(createFormController.getValues());
+                App.dbController.insertEntry(createFormController.getValues());
             } else if (sc.getSceneType() == Lookups.SceneType.EDIT) {
-                HelloApplication.dbController.updateEntry(createFormController.getValues());
+                App.dbController.updateEntry(createFormController.getValues());
             }
             sc.switchToListScene();
         } else {
@@ -185,7 +185,7 @@ public class MenuController {
         Stage dialogStage = (Stage) confirmationDialog.getDialogPane().getScene().getWindow();
         Button ok = (Button) confirmationDialog.getDialogPane().lookupButton(ButtonType.OK);
         ok.setOnAction(event -> {
-            HelloApplication.dbController.deleteEntry(id);
+            App.dbController.deleteEntry(id);
             sc.switchToListScene();
             confirmationDialog.close();
         });
@@ -204,7 +204,7 @@ public class MenuController {
                 Node node = it.next();
                 if (node.getTypeSelector().equals("HBoxListItem")) {
                     if (((HBoxListItem) node).isSelected()) {
-                        HelloApplication.dbController.deleteEntry(((HBoxListItem) node).getEntry().getId());
+                        App.dbController.deleteEntry(((HBoxListItem) node).getEntry().getId());
                         it.remove();
                     }
                 }

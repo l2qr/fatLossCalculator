@@ -29,7 +29,7 @@ public final class ScenesController {
 
     private Object switchScene(Lookups.SceneType sceneType) {
         this.sceneType = sceneType;
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(sceneType.toString()));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(sceneType.toString()));
         Scene scene;
         try {
             scene = new Scene(fxmlLoader.load(), 600, 450);

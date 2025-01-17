@@ -3,7 +3,7 @@ package skwira.marcin.fatlosscalculator;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class HelloApplication extends Application {
+public class App extends Application {
 
     static DatabaseController dbController;
     ScenesController sc = ScenesController.getInstance();

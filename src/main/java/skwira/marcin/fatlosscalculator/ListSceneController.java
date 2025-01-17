@@ -57,7 +57,7 @@ public class ListSceneController {
     @FXML
     public void initialize() {
         menuController.setListSceneController(this);
-        try (ResultSet entries = HelloApplication.dbController.selectEntries()){
+        try (ResultSet entries = App.dbController.selectEntries()){
             int i = 0;
             while (entries.next()) {
                 Entry e = new Entry(

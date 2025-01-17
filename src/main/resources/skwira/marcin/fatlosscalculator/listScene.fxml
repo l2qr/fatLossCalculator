@@ -8,7 +8,7 @@
 
 <Pane fx:id="listScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css"
-      xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="skwira.marcin.fatlosscalculator.ListSceneController">
     <fx:include fx:id="menu" source="menu.fxml"/>
     <HBox layoutY="60.0" prefHeight="30.0" prefWidth="600.0" styleClass="list-headings">
