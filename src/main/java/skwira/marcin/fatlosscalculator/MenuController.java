@@ -51,26 +51,26 @@ public class MenuController {
         menuAddBtn.setOnMouseClicked(this::add);
         menuBackBtn.setOnMouseClicked(this::back);
         menuEditBtn.setOnMouseClicked(this::edit);
+        menuHomeBtn.setOnMouseClicked(this::home);
         menuCopyBtn.setOnMouseClicked(this::copy);
         menuSaveBtn.setOnMouseClicked(this::save);
         menuRemoveBtn.setOnMouseClicked(this::remove);
         switch (sc.getSceneType()) {
             case CREATE, EDIT -> {
-                menu.getChildren().remove(menuHomeBtn);
                 menu.getChildren().remove(menuAddBtn);
                 menu.getChildren().remove(menuEditBtn);
                 menu.getChildren().remove(menuCopyBtn);
             }
             case LIST -> {
                 menu.getChildren().remove(menuHomeBtn);
-                menu.getChildren().remove(menuBackBtn);
+                if(sc.getHistory().size() == 0)
+                    menu.getChildren().remove(menuBackBtn);
                 menu.getChildren().remove(menuEditBtn);
                 menu.getChildren().remove(menuCopyBtn);
                 menu.getChildren().remove(menuSaveBtn);
                 menu.getChildren().remove(menuRemoveBtn);
             }
             case DETAILS -> {
-                menu.getChildren().remove(menuHomeBtn);
                 menu.getChildren().remove(menuAddBtn);
                 menu.getChildren().remove(menuSaveBtn);
             }
@@ -105,19 +105,23 @@ public class MenuController {
     }
 
     private void add(Event e) {
-        sc.switchToCreateScene();
+        sc.switchScene(Lookups.SceneType.CREATE);
+    }
+
+    private void home(Event e) {
+        sc.switchScene(Lookups.SceneType.LIST);
     }
 
     private void back(Event e) {
-        sc.switchToListScene();
+        sc.goBack();
     }
 
     private void edit(Event e) {
         if (sc.getSceneType() == Lookups.SceneType.LIST) {
-            sc.switchToEditScene(listSceneController.getSelectedEntry());
+            sc.switchScene(Lookups.SceneType.EDIT, listSceneController.getSelectedEntry());
         }
         if(sc.getSceneType() == Lookups.SceneType.DETAILS) {
-            sc.switchToEditScene(detailsSceneController.getEntry());
+            sc.switchScene(Lookups.SceneType.EDIT, detailsSceneController.getEntry());
         }
     }
 
@@ -150,7 +154,7 @@ public class MenuController {
             }
         }
         if(sc.getSceneType() == Lookups.SceneType.DETAILS) {
-            sc.switchToCreateScene(detailsSceneController.getEntry());
+            sc.switchScene(Lookups.SceneType.CREATE, detailsSceneController.getEntry());
         }
     }
 
@@ -162,7 +166,7 @@ public class MenuController {
             } else if (sc.getSceneType() == Lookups.SceneType.EDIT) {
                 App.dbController.updateEntry(createFormController.getValues());
             }
-            sc.switchToListScene();
+            sc.switchScene(Lookups.SceneType.LIST);
         } else {
             Alert validationFailedDialog = new Alert(Alert.AlertType.INFORMATION);
             validationFailedDialog.setHeaderText(null);
@@ -186,7 +190,7 @@ public class MenuController {
         Button ok = (Button) confirmationDialog.getDialogPane().lookupButton(ButtonType.OK);
         ok.setOnAction(event -> {
             App.dbController.deleteEntry(id);
-            sc.switchToListScene();
+            sc.switchScene(Lookups.SceneType.LIST);
             confirmationDialog.close();
         });
         confirmationDialog.show();
