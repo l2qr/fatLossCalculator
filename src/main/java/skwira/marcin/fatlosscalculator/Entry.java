@@ -245,7 +245,7 @@ public class Entry {
         listItem.getChildren().add(openBtn);
         listItem.setAlignment(Pos.CENTER);
 
-        openBtn.setOnMouseClicked(e -> ScenesController.getInstance().switchToDetailsScene(this));
+        openBtn.setOnMouseClicked(e -> ScenesController.getInstance().switchScene(Lookups.SceneType.DETAILS, this));
 
         return listItem;
     }
