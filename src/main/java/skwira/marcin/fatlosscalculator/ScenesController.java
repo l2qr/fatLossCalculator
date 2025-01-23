@@ -68,6 +68,11 @@ public final class ScenesController {
                     ctrl.loadDetails(e);
                     return ctrl;
                 }
+                case TRACKER -> {
+                    TrackerSceneController ctrl = (TrackerSceneController) fxmlLoader.getController();
+                    ctrl.setChartValues(e);
+                    return ctrl;
+                }
             }
         }
         return fxmlLoader.getController();

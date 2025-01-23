@@ -32,6 +32,8 @@ public class MenuController {
     private Button menuRemoveBtn;
     @FXML
     private Button menuSaveBtn;
+    @FXML
+    private Button menuTrackerBtn;
 
 
     private final ScenesController sc = ScenesController.getInstance();
@@ -50,6 +52,7 @@ public class MenuController {
     public void initialize() {
         menuAddBtn.setOnMouseClicked(this::add);
         menuBackBtn.setOnMouseClicked(this::back);
+        menuTrackerBtn.setOnMouseClicked(this::tracker);
         menuEditBtn.setOnMouseClicked(this::edit);
         menuHomeBtn.setOnMouseClicked(this::home);
         menuCopyBtn.setOnMouseClicked(this::copy);
@@ -60,11 +63,13 @@ public class MenuController {
                 menu.getChildren().remove(menuAddBtn);
                 menu.getChildren().remove(menuEditBtn);
                 menu.getChildren().remove(menuCopyBtn);
+                menu.getChildren().remove(menuTrackerBtn);
             }
             case LIST -> {
                 menu.getChildren().remove(menuHomeBtn);
-                if(sc.getHistory().size() == 0)
+                if(sc.getHistory().isEmpty())
                     menu.getChildren().remove(menuBackBtn);
+                menu.getChildren().remove(menuTrackerBtn);
                 menu.getChildren().remove(menuEditBtn);
                 menu.getChildren().remove(menuCopyBtn);
                 menu.getChildren().remove(menuSaveBtn);
@@ -73,6 +78,16 @@ public class MenuController {
             case DETAILS -> {
                 menu.getChildren().remove(menuAddBtn);
                 menu.getChildren().remove(menuSaveBtn);
+            }
+            case TRACKER -> {
+                if(sc.getHistory().isEmpty())
+                    menu.getChildren().remove(menuBackBtn);
+                menu.getChildren().remove(menuTrackerBtn);
+                menu.getChildren().remove(menuAddBtn);
+                menu.getChildren().remove(menuEditBtn);
+                menu.getChildren().remove(menuCopyBtn);
+                menu.getChildren().remove(menuSaveBtn);
+                menu.getChildren().remove(menuRemoveBtn);
             }
         }
     }
@@ -89,6 +104,7 @@ public class MenuController {
         if (!isBtnShown(bt)) {
             switch (bt) {
                 case ADD -> menu.getChildren().add(menuAddBtn);
+                case TRACKER -> menu.getChildren().add(menuTrackerBtn);
                 case EDIT -> menu.getChildren().add(menuEditBtn);
                 case COPY -> menu.getChildren().add(menuCopyBtn);
                 case SAVE -> menu.getChildren().add(menuSaveBtn);
@@ -181,6 +197,15 @@ public class MenuController {
             case CREATE, EDIT -> createFormController.clearValues();
             case DETAILS -> showDialog(detailsSceneController.getEntry().getId());
             case LIST -> showDialog(listSceneController.getEntriesList().getChildren());
+        }
+    }
+
+    private void tracker(Event e) {
+        if (sc.getSceneType() == Lookups.SceneType.LIST) {
+            sc.switchScene(Lookups.SceneType.TRACKER, listSceneController.getSelectedEntry());
+        }
+        if(sc.getSceneType() == Lookups.SceneType.DETAILS) {
+            sc.switchScene(Lookups.SceneType.TRACKER, detailsSceneController.getEntry());
         }
     }
 

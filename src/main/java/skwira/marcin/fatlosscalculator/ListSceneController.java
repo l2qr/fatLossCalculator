@@ -41,11 +41,13 @@ public class ListSceneController {
             }
             listItem.toggle();
             if (listItem.isSelected()) {
+                menuController.showButton(Lookups.MenuBtnType.TRACKER);
                 menuController.showButton(Lookups.MenuBtnType.EDIT);
                 menuController.showButton(Lookups.MenuBtnType.COPY);
                 menuController.showButton(Lookups.MenuBtnType.REMOVE);
                 selectedEntry = listItem.getEntry();
             } else {
+                menuController.hideButton(Lookups.MenuBtnType.TRACKER);
                 menuController.hideButton(Lookups.MenuBtnType.EDIT);
                 menuController.hideButton(Lookups.MenuBtnType.COPY);
                 menuController.hideButton(Lookups.MenuBtnType.REMOVE);

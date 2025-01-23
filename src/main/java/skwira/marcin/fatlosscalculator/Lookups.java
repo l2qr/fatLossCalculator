@@ -55,7 +55,8 @@ public class Lookups {
         LIST("listScene.fxml"),
         CREATE("createScene.fxml"),
         DETAILS("detailsScene.fxml"),
-        EDIT("createScene.fxml");
+        EDIT("createScene.fxml"),
+        TRACKER("trackerScene.fxml");
 
         private final String name;
 
@@ -90,6 +91,7 @@ public class Lookups {
     public enum MenuBtnType {
         ADD("menuAddBtn"),
         BACK("menuBackBtn"),
+        TRACKER("menuTrackerBtn"),
         EDIT("menuEditBtn"),
         COPY("menuCopyBtn"),
         SAVE("menuSaveBtn"),
