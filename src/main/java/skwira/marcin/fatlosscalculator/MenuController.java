@@ -39,7 +39,7 @@ public class MenuController {
     private final ScenesController sc = ScenesController.getInstance();
     @Setter
     @FXML
-    private CreateFormController createFormController;
+    private CreateSceneController createSceneController;
     @Setter
     @FXML
     private ListSceneController listSceneController;
@@ -176,11 +176,11 @@ public class MenuController {
 
 
     private void save(Event e) {
-        if(createFormController.isValid()) {
+        if(createSceneController.isValid()) {
             if (sc.getSceneType() == Lookups.SceneType.CREATE) {
-                App.dbController.insertEntry(createFormController.getValues());
+                App.dbController.insertEntry(createSceneController.getValues());
             } else if (sc.getSceneType() == Lookups.SceneType.EDIT) {
-                App.dbController.updateEntry(createFormController.getValues());
+                App.dbController.updateEntry(createSceneController.getValues());
             }
             sc.switchScene(Lookups.SceneType.LIST);
         } else {
@@ -194,7 +194,7 @@ public class MenuController {
 
     private void remove(Event e) {
         switch(sc.getSceneType()) {
-            case CREATE, EDIT -> createFormController.clearValues();
+            case CREATE, EDIT -> createSceneController.clearValues();
             case DETAILS -> showDialog(detailsSceneController.getEntry().getId());
             case LIST -> showDialog(listSceneController.getEntriesList().getChildren());
         }

@@ -60,7 +60,7 @@ public final class ScenesController {
             switch (sceneType) {
                 case CREATE, EDIT -> {
                     CreateSceneController ctrl = (CreateSceneController) fxmlLoader.getController();
-                    ctrl.getCreateFormController().setValues(e);
+                    ctrl.setValues(e);
                     return ctrl;
                 }
                 case DETAILS -> {

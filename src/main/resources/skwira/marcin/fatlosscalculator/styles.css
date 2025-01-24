@@ -191,14 +191,14 @@
 
 
 /* Create Form */
-.createListItem {
+/*.createListItem {
     -fx-pref-width: 580;
 }
 .createListItemControl {
     -fx-pref-width: 480;
     -fx-max-width: 480;
     -fx-pref-height: 39;
-}
+}*/
 .label,
 .form-label,
 .radio-button,
@@ -228,7 +228,7 @@
     -fx-text-fill: -fx-text-color;
     -fx-alignment: baseline-left;
     -fx-font-size: 12px;
-    -fx-padding: 0 0 0 -15;
+    -fx-padding: 0 0 0 8;
 
 }
 .hboxlistitem:selected {

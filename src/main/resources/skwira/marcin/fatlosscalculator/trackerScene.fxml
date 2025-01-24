@@ -2,16 +2,19 @@
 
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.TrackerSceneController">
-    <fx:include fx:id="menu" source="menu.fxml" />
-   <LineChart fx:id="weightChart" layoutY="60.0" legendSide="RIGHT" prefHeight="390.0" prefWidth="600.0">
-     <xAxis>
-       <NumberAxis fx:id="weightXAxis" animated="false" autoRanging="false" forceZeroInRange="false" lowerBound="-1.0" minorTickCount="0" minorTickVisible="false" side="BOTTOM" tickLabelGap="0.0" tickLabelRotation="-30.0" tickLength="5.0" tickUnit="1.0" upperBound="300.0" />
-     </xAxis>
-     <yAxis>
-       <NumberAxis fx:id="weightYAxis" animated="false" autoRanging="false" forceZeroInRange="false" minorTickCount="0" minorTickLength="0.0" minorTickVisible="false" side="LEFT" tickLabelGap="2.0" tickLength="5.0" upperBound="1000.0" />
-     </yAxis>
-   </LineChart>
-</Pane>
+
+<AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.TrackerSceneController">
+   <children>
+       <fx:include fx:id="menu" source="menu.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <LineChart fx:id="weightChart" legendSide="RIGHT" prefHeight="390.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+        <xAxis>
+          <NumberAxis fx:id="weightXAxis" animated="false" autoRanging="false" forceZeroInRange="false" lowerBound="-1.0" minorTickCount="0" minorTickVisible="false" side="BOTTOM" tickLabelGap="0.0" tickLabelRotation="-30.0" tickLength="5.0" tickUnit="1.0" upperBound="300.0" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="weightYAxis" animated="false" autoRanging="false" forceZeroInRange="false" minorTickCount="0" minorTickLength="0.0" minorTickVisible="false" side="LEFT" tickLabelGap="2.0" tickLength="5.0" upperBound="1000.0" />
+        </yAxis>
+      </LineChart>
+   </children>
+</AnchorPane>

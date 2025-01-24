@@ -9,6 +9,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import lombok.Getter;
 import lombok.Setter;
@@ -192,25 +193,25 @@ public class Entry {
 
     public HBoxListItem getListItem() {
         Label nameLabel = createLabel(this.name);
-        nameLabel.setMaxWidth(300);
+        nameLabel.setMaxWidth(1.7976931348623157E308);
         nameLabel.setMinWidth(300);
         nameLabel.setWrapText(true);
 
         Label sexLabel = createLabel(this.sex.toString());
         sexLabel.setMinWidth(70);
-        sexLabel.setMaxWidth(70);
+        sexLabel.setPrefWidth(70);
 
         Label ageLabel = createLabel(Long.toString(this.age));
         ageLabel.setMinWidth(40);
-        ageLabel.setMaxWidth(40);
+        ageLabel.setPrefWidth(40);
 
         Label bodymassLabel = createLabel(String.format("%.1fkg", this.bodyMass));
         bodymassLabel.setMinWidth(75);
-        bodymassLabel.setMaxWidth(75);
+        bodymassLabel.setPrefWidth(75);
 
         Label targetLabel = createLabel(String.format("%.1f%%", this.targetFatPercentage * 100));
-        targetLabel.setMinWidth(40);
-        targetLabel.setMaxWidth(40);
+        targetLabel.setMinWidth(50);
+        targetLabel.setPrefWidth(50);
 
         ImageView imageView = new ImageView();
         imageView.setFitHeight(30);
@@ -226,25 +227,29 @@ public class Entry {
         Button openBtn = new Button();
         openBtn.setMinHeight(30);
         openBtn.setMaxHeight(30);
-        openBtn.setMaxWidth(30);
-        openBtn.setMinWidth(30);
+        openBtn.setMinWidth(50);
+        openBtn.setMaxWidth(50);
+        openBtn.setPadding(new Insets(0,12,0,8));
         openBtn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         openBtn.setGraphicTextGap(0);
         openBtn.setGraphic(imageView);
         HBoxListItem listItem = new HBoxListItem(this);
         listItem.setPrefHeight(LIST_ITEM_HEIGHT);
         listItem.setPrefWidth(600);
+        listItem.setMaxWidth(1.7976931348623157E308);
         listItem.setPadding(Insets.EMPTY);
         listItem.setSpacing(0);
 
         listItem.getChildren().add(nameLabel);
+        HBoxListItem.setHgrow(nameLabel, Priority.ALWAYS);
         listItem.getChildren().add(sexLabel);
         listItem.getChildren().add(ageLabel);
         listItem.getChildren().add(bodymassLabel);
         listItem.getChildren().add(targetLabel);
         listItem.getChildren().add(openBtn);
         listItem.setAlignment(Pos.CENTER);
-
+        AnchorPane.setRightAnchor(listItem, 15d);
+        AnchorPane.setLeftAnchor(listItem, 0.0);
         openBtn.setOnMouseClicked(e -> ScenesController.getInstance().switchScene(Lookups.SceneType.DETAILS, this));
 
         return listItem;

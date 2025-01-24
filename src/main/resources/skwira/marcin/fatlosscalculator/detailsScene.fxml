@@ -2,17 +2,19 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="detailsScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.DetailsSceneController">
-    <children>
-        <fx:include fx:id="menu" source="menu.fxml" />
-      <TableView fx:id="detailsTable" layoutY="61.0" prefHeight="390.0" prefWidth="600.0">
+<AnchorPane minHeight="450.0" minWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.DetailsSceneController">
+   <children>
+        <fx:include fx:id="menu" source="menu.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <TableView fx:id="detailsTable" minHeight="390.0" minWidth="600.0" stylesheets="@styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
         <columns>
-          <TableColumn fx:id="propertyColumn" editable="false" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" resizable="false" text="Property" />
-          <TableColumn fx:id="valueColumn" editable="false" maxWidth="282.0" minWidth="282.0" prefWidth="282.0" resizable="false" text="Value" />
+          <TableColumn fx:id="propertyColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" text="Property" />
+          <TableColumn fx:id="valueColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="282.0" prefWidth="-1.0" text="Value" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-    </children>
-
-</Pane>
+   </children>
+</AnchorPane>
