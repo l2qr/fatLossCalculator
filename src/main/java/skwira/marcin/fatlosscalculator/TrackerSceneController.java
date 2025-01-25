@@ -1,10 +1,8 @@
 package skwira.marcin.fatlosscalculator;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.StackedAreaChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import lombok.Setter;
 
 public class TrackerSceneController {
@@ -36,18 +34,19 @@ public class TrackerSceneController {
                 goal.getData().add(new XYChart.Data<>(i, targetWeight));
             }
             weightXAxis.setTickUnit(1);
-            weightXAxis.setLowerBound(0);
+            weightXAxis.setLowerBound(-1);
             weightXAxis.setUpperBound(Math.ceil(entry.getTimeToTarget() + 1));
+//            weightXAxis.getTickMarks().get(0).setLabel("");
 
-            double decPlaces = 1e2;
-            double tickUnitYDecPlace = Math.floor(entry.getWeeklyBMLossKG() * decPlaces)/decPlaces;
+            double decPlaces = 1e1;
+            double tickUnitYDecPlace = Math.floor((entry.getBmLossRequired()/(entry.getTimeToTarget() + 2)) * 2 * decPlaces)/decPlaces;
             double lowBoundYDecPlace = Math.floor((entry.getBodyMass() - entry.getBmLossRequired() - tickUnitYDecPlace) * decPlaces)/decPlaces;
             double upBoundYDecPlace = Math.floor((entry.getBodyMass() + tickUnitYDecPlace) * decPlaces)/decPlaces;
             weightYAxis.setTickUnit(tickUnitYDecPlace);
             weightYAxis.setUpperBound(upBoundYDecPlace);
             weightYAxis.setLowerBound(lowBoundYDecPlace);
-            weightChart.getData().addAll(goal);
 
+            weightChart.getData().addAll(goal);
         }
         return;
     }

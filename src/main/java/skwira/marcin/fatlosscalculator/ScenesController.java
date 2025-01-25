@@ -49,7 +49,7 @@ public final class ScenesController {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(sceneType.toString()));
         Scene scene;
         try {
-            scene = new Scene(fxmlLoader.load(), 600, 450);
+            scene = new Scene(fxmlLoader.load(), 800, 600);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

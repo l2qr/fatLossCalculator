@@ -238,15 +238,66 @@
     -fx-text-fill: white;
 }
 
+/* Tracking */
+.card > .label{
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+.card {
+    /*-fx-background-color: derive(-fx-secondary-color, 20%);*/
+    -fx-background-color: -fx-secondary-color;
+    -fx-background-radius: 20;
+}
+/* Chart */
+.chart-horizontal-zero-line,
+.chart-vertical-zero-line {
+    /*-fx-stroke: red;*/
+    -fx-stroke: derive(-fx-secondary-color, 5%);
+    -fx-stroke-width: 0.75px;
+    -fx-stroke-dash-array: 3, 2;
+}
+.chart-vertical-grid-lines,
+.chart-horizontal-grid-lines{
+    -fx-stroke: derive(-fx-secondary-color, 5%);
+    -fx-stroke-width: 0.75px;
+}
+.chart-alternative-row-fill {
+    /*-fx-fill: derive(-fx-secondary-color, -20%);*/
+}
+.series0 {
+    -fx-stroke: #69af4b;
+    -fx-background-color: #69af4b;
+    -fx-stroke-width: 2px;
+}
+.series1 {
+    -fx-stroke: #f9e79f;
+    -fx-background-color: #f9e79f;
+    -fx-stroke-width: 2px;
+}
+.chart-series-line,
+.chart-line-symbol {
+    /*-fx-background-radius: 0.0px;
+    -fx-padding: 0.0px;
+    */
+}
+.chart-line-symbol {
+    -fx-scale-x: 0.75;
+    -fx-scale-y: 0.75;
+}
+
+
 
 .invalid {
     -fx-border-color: -fx-error-color;
 }
 
 .darker-bg {
+    -fx-background: -fx-primary-color;
     -fx-background-color: -fx-primary-color;
 }
 
 .dark-bg {
+    -fx-background: -fx-secondary-color;
     -fx-background-color: -fx-secondary-color;
 }

@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.TrackerSceneController">
-   <children>
-       <fx:include fx:id="menu" source="menu.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <LineChart fx:id="weightChart" legendSide="RIGHT" prefHeight="390.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
-        <xAxis>
-          <NumberAxis fx:id="weightXAxis" animated="false" autoRanging="false" forceZeroInRange="false" lowerBound="-1.0" minorTickCount="0" minorTickVisible="false" side="BOTTOM" tickLabelGap="0.0" tickLabelRotation="-30.0" tickLength="5.0" tickUnit="1.0" upperBound="300.0" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="weightYAxis" animated="false" autoRanging="false" forceZeroInRange="false" minorTickCount="0" minorTickLength="0.0" minorTickVisible="false" side="LEFT" tickLabelGap="2.0" tickLength="5.0" upperBound="1000.0" />
-        </yAxis>
-      </LineChart>
-   </children>
+<AnchorPane minHeight="450.0" minWidth="600.0" prefHeight="800.0" prefWidth="600.0" styleClass="darker-bg" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skwira.marcin.fatlosscalculator.TrackerSceneController">
+    <fx:include source="menu.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutY="60.0" styleClass="darker-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+      <content>
+         <HBox maxHeight="400.0" maxWidth="1.7976931348623157E308">
+            <children>
+                <LineChart fx:id="weightChart" maxHeight="390.0" minHeight="390.0" minWidth="400.0" prefWidth="400.0" title="Goal tracking" HBox.hgrow="SOMETIMES">
+                  <xAxis>
+                      <NumberAxis fx:id="weightXAxis" animated="false" autoRanging="false" forceZeroInRange="false" lowerBound="-1.0" minorTickCount="0" minorTickVisible="false" side="BOTTOM" tickLabelGap="0.0" tickLength="5.0" tickUnit="1.0" upperBound="300.0" />
+                  </xAxis>
+                  <yAxis>
+                      <NumberAxis fx:id="weightYAxis" animated="false" autoRanging="false" forceZeroInRange="false" minorTickCount="0" minorTickLength="0.0" minorTickVisible="false" side="LEFT" tickLabelGap="2.0" tickLength="5.0" upperBound="1000.0" />
+                  </yAxis>
+                </LineChart>
+               <VBox alignment="CENTER" minWidth="160.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="SOMETIMES">
+                  <children>
+                     <VBox alignment="CENTER_LEFT" styleClass="card">
+                        <children>
+                           <Label text="Last measurement" wrapText="true" />
+                           <Label wrapText="true" />
+                           <Label text="Average weekly change" wrapText="true" />
+                           <Label layoutX="20.0" layoutY="30.0" wrapText="true" />
+                           <Label layoutX="10.0" layoutY="68.0" text="Weight left to target" wrapText="true" />
+                           <Label layoutX="20.0" layoutY="195.0" wrapText="true" />
+                        </children>
+                        <padding>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                     </VBox>
+                     <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="147.0" styleClass="card">
+                        <children>
+                           <Label text="Average daily calories" />
+                           <Label layoutX="20.0" layoutY="146.0" />
+                           <Label text="Avg. deviation from target" />
+                           <Label layoutX="20.0" layoutY="117.0" />
+                           <Label text="Last 7 days calories budget" />
+                           <Label layoutX="10.0" layoutY="68.0" />
+                        </children>
+                        <padding>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                     </VBox>
+                  </children>
+                  <padding>
+                     <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+                  </padding>
+               </VBox>
+            </children>
+         </HBox>
+      </content>
+   </ScrollPane>
 </AnchorPane>
