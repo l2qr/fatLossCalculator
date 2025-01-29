@@ -242,7 +242,7 @@
 .card > .label{
     -fx-text-fill: -fx-text-color;
     -fx-font-size: 12px;
-    -fx-font-weight: 500;
+    -fx-font-weight: 700;
 }
 .card {
     /*-fx-background-color: derive(-fx-secondary-color, 20%);*/
@@ -284,6 +284,55 @@
 .chart-line-symbol {
     -fx-scale-x: 0.75;
     -fx-scale-y: 0.75;
+}
+
+
+
+.tab-pane .tab-header-area .tab-header-background {
+        -fx-background-color: -fx-secondary-color;
+
+}
+
+.tab-pane
+{
+    -fx-tab-min-width:90px;
+    -fx-tab-min-height:30px;
+}
+.tab-pane .tab
+{
+    -fx-background-insets: 0 1 0 1,0,0;
+    -fx-background-color: -fx-secondary-color;
+    -fx-border-color: -fx-primary-color;
+    -fx-border-width: 3px 3px 0px 3px;
+    -fx-border-radius: 8px 8px 0px 0px;
+}
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.tab-pane .tab:selected
+{
+    -fx-border-radius: 8px 8px 0px 0px;
+    -fx-background-radius: 8px 8px 0px 0px;
+    -fx-background-color: -fx-primary-color;
+}
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator
+{
+    -fx-border-width: 0px;
+}
+.tab-pane:focused .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+#addRecordBtn {
+    -fx-background-color: green;
+    -fx-font-weight: 700;
+}
+#removeRecordBtn {
+    -fx-background-color: red;
+    -fx-font-weight: 700;
 }
 
 

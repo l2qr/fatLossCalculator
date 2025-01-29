@@ -32,13 +32,38 @@ public class DatabaseController {
                 	"target_fat_perc" REAL NULL,
                 	"weekly_loss" REAL NULL,
                 	"carb_fat_distribution" REAL NULL
-                )
-                ;""";
+                );
+                CREATE TABLE IF NOT EXISTS "tracking" (
+                 	"id" INTEGER NOT NULL
+                 	"entry_id" INTEGER NOT NULL,
+                 	"weight" REAL NOT NULL,
+                 	"calories" REAL NOT NULL,
+                 	"date" TEXT NOT NULL
+                );""";
         try {
             conn.createStatement().execute(query);
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    protected int insertTracking(int entryId, LocalDate date, double weight, double kcal) {
+        int resultId = -1;
+        String query = """
+                INSERT INTO "tracking" (
+                    "entry_id",
+                    "weight",
+                    "calories",
+                    "date")
+                VALUES ( ?, ?, ?, ? );""";
+        PreparedStatement preparedStatement;
+        int affectedRows = 0;
+        try {
+            preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultId;
     }
 
     protected int insertEntry(Entry form) {
